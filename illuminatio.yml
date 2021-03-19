@@ -1,0 +1,435 @@
+### Light controller main
+
+
+substitutions:
+  devicename: dev_illuminatio
+  upperDevicename: Dev Lights Controller
+  <<: !include ioMapping.yml
+
+esphome:
+  name: $devicename
+  platform: ESP32
+  board: esp32-poe
+
+packages:
+  wifi: !include common/wifi.yml
+#  ethernet: !include common/ethernet.yml
+  api: !include common/api.yml
+  ota: !include common/ota.yml
+  mqtt: !include common/mqtt.yml
+  logger: !include common/logger.yml
+  time: !include common/time.yml
+    
+i2c:
+#  sda: D1
+#  scl: D2
+  scan: True
+
+# load module for PCF8574 Remote 8-Bit I/O Expanderfor I2C Bus
+# datasheet https://www.ti.com/lit/ds/symlink/pcf8574.pdf
+pcf8574:
+  - id: 'pcf8574_1'
+    address: 0x38
+    pcf8575: False
+
+  - id: 'pcf8574_2'
+    address: 0x39
+    pcf8575: False
+
+  - id: 'pcf8574_3'
+    address: 0x3A
+    pcf8575: False
+
+  - id: 'pcf8574_4'
+    address: 0x3B
+    pcf8575: False
+
+# Individual outputs
+switch:
+  - platform: restart
+    name: Restart ESP
+
+# Define behaviour on lightswitch presses
+# for detailed decription check switch_mappings.ods
+binary_sensor:
+
+# hallwaySwitch_key1
+  - platform: gpio
+    name: "hallwaySwitch_key1"
+    id: $lightSwitch11
+    pin:
+      pcf8574: pcf8574_1
+      number: 0
+      mode: INPUT
+      inverted: True
+    filters:
+      - delayed_on_off: 30ms
+    # on single click, toggle light
+    on_click:
+      then:
+        light.toggle: light_0
+    # on double click, turno on ligh with brighness 100%
+    on_multi_click:
+    - timing:
+        - ON for at most 0.5s
+        - OFF for at most 1s
+        - ON for at most 0.5s
+        - OFF for at least 0.1s
+      then:
+        light.turn_on: 
+          id: light_0
+          brightness: 100%     
+    # on press, dimm up or down   
+    on_press:
+      then:
+      - if:
+          condition:
+            light.is_off: light_0
+          then:
+          - delay: 0.5s         
+          - while:
+              condition:
+                binary_sensor.is_on: pcf1_0
+              then:
+                - if:
+                    condition:
+                      light.is_off: light_0
+                    then:
+                    - light.turn_on:
+                        id: light_0
+                        brightness: 40%  
+                - light.dim_relative:
+                    id: light_0
+                    relative_brightness: 5%
+                    transition_length: 0.1s
+                - delay: 0.1s
+          else:
+          - delay: 0.5s
+          - while:
+              condition:
+                and:
+                  - binary_sensor.is_on: pcf1_0
+                  - light.is_on: light_0
+              then:
+                - light.dim_relative:
+                    id: light_0
+                    relative_brightness: -5%
+                    transition_length: 0.1s
+                - delay: 0.1s
+
+# hallwaySwitch_key2
+  - platform: gpio
+    name: "hallwaySwitch_key2"
+    id: $lightSwitch12
+    pin:
+      pcf8574: pcf8574_1
+      number: 1
+      mode: INPUT
+      inverted: True
+    filters:
+      - delayed_on_off: 30ms
+    on_click:
+      then:
+        light.toggle: light_4
+    on_double_click:
+      then:
+        light.turn_on: 
+          id: light_4
+          brightness: 100%
+    on_press:
+      then:
+      - if:
+          condition:
+            light.is_off: light_4
+          then:
+          - delay: 0.5s
+          - while:
+              condition:
+                binary_sensor.is_on: $lightSwitch12
+              then:
+                - light.dim_relative:
+                    id: light_4
+                    relative_brightness: 5%
+                    transition_length: 0.1s
+                - delay: 1s
+          else:
+          - delay: 0.5s
+          - while:
+              condition:
+                and:
+                  - binary_sensor.is_on: $lightSwitch12
+                  - light.is_on: light_4
+              then:
+                - light.dim_relative:
+                    id: light_4
+                    relative_brightness: -5%
+                    transition_length: 0.1s
+                - delay: 1s
+
+# hallwaySwitch_key3
+  - platform: gpio
+    name: "hallwaySwitch_key3"
+    id: $lightSwitch13
+    pin:
+      pcf8574: pcf8574_1
+      number: 2
+      mode: INPUT
+      inverted: True
+    filters:
+      - delayed_on_off: 30ms
+    on_click:
+      then:
+        light.toggle: light_8
+    on_press:
+      then:
+      - if:
+          condition:
+            light.is_off: light_8
+          then:
+          - delay: 0.5s
+          - while:
+              condition:
+                binary_sensor.is_on: $lightSwitch13
+              then:
+                - light.dim_relative:
+                    id: light_8
+                    relative_brightness: 5%
+                    transition_length: 0.1s
+                - delay: 0.1s
+          else:
+          - delay: 0.5s
+          - while:
+              condition:
+                and:
+                  - binary_sensor.is_on: $lightSwitch13
+                  - light.is_on: light_8
+              then:
+                - light.dim_relative:
+                    id: light_8
+                    relative_brightness: -5%
+                    transition_length: 0.1s
+                - delay: 0.1s
+
+# hallwaySwitch_key4 is a meta key and usable only via Home Assistant
+  - platform: gpio
+    name: "hallwaySwitch_key4"
+    id: $lightSwitch14
+    pin:
+      pcf8574: pcf8574_1
+      number: 3
+      mode: INPUT
+      inverted: True
+    filters:
+      - delayed_on_off: 30ms
+
+
+
+
+
+
+
+
+  - platform: gpio
+    name: "PCF8574_1 Pin #4"
+    id: pcf1_4
+    pin:
+      pcf8574: pcf8574_1
+      number: 4
+      mode: INPUT
+      inverted: True
+    filters:
+      - delayed_on_off: 30ms
+
+  - platform: gpio
+    name: "PCF8574_1 Pin #5"
+    id: pcf1_5
+    pin:
+      pcf8574: pcf8574_1
+      number: 5
+      mode: INPUT
+      inverted: True
+    filters:
+      - delayed_on_off: 30ms
+
+  - platform: gpio
+    name: "PCF8574_1 Pin #6"
+    id: pcf1_6
+    pin:
+      pcf8574: pcf8574_1
+      number: 6
+      mode: INPUT
+      inverted: True
+    filters:
+      - delayed_on_off: 30ms
+
+  - platform: gpio
+    name: "PCF8574_1 Pin #7"
+    id: pcf1_7
+    pin:
+      pcf8574: pcf8574_1
+      number: 7
+      mode: INPUT
+      inverted: True
+    filters:
+      - delayed_on_off: 30ms
+
+
+
+
+
+# load module for PCA9685 16-Channel 12-bit PWM/Servo Driver I2C
+# datasheet https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf
+pca9685:
+  - frequency: 500
+
+#Define PCA9685 PWM chnnels and register them as outputs in ESPHome
+# pins 0-15 are defined as channel 0-15
+output:
+  - platform: pca9685
+    id: pca1_0
+    channel: 0
+    inverted: True
+
+  - platform: pca9685
+    id: pca1_1
+    channel: 1
+
+  - platform: pca9685
+    id: pca1_2
+    channel: 2
+
+  - platform: pca9685
+    id: pca1_3
+    channel: 3
+
+  - platform: pca9685
+    id: pca1_4
+    channel: 4
+
+  - platform: pca9685
+    id: pca1_5
+    channel: 5
+
+  - platform: pca9685
+    id: pca1_6
+    channel: 6
+
+  - platform: pca9685
+    id: pca1_7
+    channel: 7
+
+  - platform: pca9685
+    id: pca1_8
+    channel: 8
+
+  - platform: pca9685
+    id: pca1_9
+    channel: 9
+
+  - platform: pca9685
+    id: pca1_10
+    channel: 10
+
+  - platform: pca9685
+    id: pca1_11
+    channel: 11
+
+  - platform: pca9685
+    id: pca1_12
+    channel: 12
+
+  - platform: pca9685
+    id: pca1_13
+    channel: 13
+
+  # - platform: pca9685
+  #   id: pca1_14
+  #   channel: 14
+
+  # - platform: pca9685
+  #   id: pca1_15
+  #   channel: 15
+
+
+# Define LED drivers as light components for esphome and hass automations
+# https://esphome.io/components/light/index.html
+light:  
+  - platform: monochromatic
+    name: "hallwayCeilingLight"
+    id: light_0
+    output: pca1_0
+
+  - platform: monochromatic
+    name: "hallwayWallLight"
+    id: light_1
+    output: pca1_1
+
+  - platform: monochromatic
+    name: "exteriorLight"
+    id: light_2
+    output: pca1_2
+
+  - platform: monochromatic
+    name: "bathroomCeilingLight"
+    id: light_3
+    output: pca1_3
+    
+  - platform: monochromatic
+    name: "bathroomWallLight"
+    id: light_4
+    output: pca1_4
+        
+  - platform: monochromatic
+    name: "underStairLight"
+    id: light_5
+    output: pca1_5
+        
+  - platform: monochromatic
+    name: "livingroomCeilingLight"
+    id: light_6
+    output: pca1_6
+        
+  - platform: monochromatic
+    name: "livingroomWallLight"
+    id: light_7
+    output: pca1_7
+    
+  - platform: monochromatic
+    name: "livingroomTableLight"
+    id: light_8
+    output: pca1_8
+        
+  - platform: monochromatic
+    name: "kitchenCeilingLight"
+    id: light_9
+    output: pca1_9
+        
+  - platform: monochromatic
+    name: "stairsCeilingLight"
+    id: light_10
+    output: pca1_10
+
+  - platform: monochromatic
+    name: "stairsStepLight"
+    id: light_11
+    output: pca1_11
+        
+  - platform: monochromatic
+    name: "studyCeilingLight"
+    id: light_12
+    output: pca1_12
+        
+  - platform: monochromatic
+    name: "studyWallLight"
+    id: light_13
+    output: pca1_13
+    
+  # - platform: monochromatic
+  #   name: "Light"
+  #   id: light_14
+  #   output: pca1_14
+        
+  # - platform: monochromatic
+  #   name: "Light"
+  #   id: light_15
+  #   output: pca1_15

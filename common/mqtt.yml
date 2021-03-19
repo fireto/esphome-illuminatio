@@ -1,0 +1,7 @@
+# Configuration of a mqtt broker
+mqtt:
+  broker: !secret mqttBrokerAddress
+  port: !secret mqttBrokerProt
+  username: !secret mqttUser
+  password: !secret mqttPwd
+  discovery: true

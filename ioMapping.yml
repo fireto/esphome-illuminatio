@@ -1,0 +1,67 @@
+#Light switch 1
+  lightSwitch11: pcf1_0
+  lightSwitch12: pcf1_1
+  lightSwitch13: pcf1_2
+  lightSwitch14: pcf1_3
+
+#Light switch 2
+  lightSwitch21: pcf1_4
+  lightSwitch22: pcf1_5
+  lightSwitch23: pcf1_6
+  lightSwitch24: pcf1_7
+
+#Light switch 3
+  lightSwitch31: pcf2_0
+  lightSwitch32: pcf2_1
+  lightSwitch33: pcf2_2
+  lightSwitch34: pcf2_3
+
+#Light switch 4
+  lightSwitch41: pcf2_4
+  lightSwitch42: pcf2_5
+  lightSwitch43: pcf2_6
+  lightSwitch44: pcf2_7
+
+#Light switch 5
+  lightSwitch51: pcf3_0
+  lightSwitch52: pcf3_1
+  lightSwitch53: pcf3_2
+  lightSwitch54: pcf3_3
+
+#Light switch 6
+  lightSwitch61: pcf3_4
+  lightSwitch62: pcf3_5
+  lightSwitch63: pcf3_6
+  lightSwitch64: pcf3_7
+
+#Light switch 7
+  lightSwitch71: pcf4_0
+  lightSwitch72: pcf4_1
+  lightSwitch73: pcf4_2
+  lightSwitch74: pcf4_3
+
+#Light switch 8
+  lightSwitch81: pcf4_4
+  lightSwitch82: pcf4_5
+  lightSwitch83: pcf4_6
+  lightSwitch84: pcf4_7
+
+# #hallway
+#   hallwayCeiling:
+#   hallwayWall:
+
+# #bathroom
+#   bathCeiling:
+#   bathMirror:
+#   bathFloorHeating:
+
+# #stairs
+#   stairUnder:
+#   stairCeiling:
+#   stairSteps:
+
+# #livingRoom
+#   livingCeiling:
+#   livingWall:
+#   livingTable:
+  

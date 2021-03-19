@@ -30,6 +30,11 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+dev_illuminatio/
+.esphome
+
+# ignore passwords
+secrets.*
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -292,6 +297,10 @@ node_modules/
 **/*.Server/ModelManifest.xml
 _Pvt_Extensions
 
+# platformio dependency
+
+.piolibdeps/
+
 # Paket dependency manager
 .paket/paket.exe
 paket-files/
@@ -348,3 +357,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Libre office lock files
+.~lock.*

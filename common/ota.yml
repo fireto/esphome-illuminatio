@@ -1,0 +1,3 @@
+# Enable Over The Air updates
+ota:
+  password: !secret otaPwd

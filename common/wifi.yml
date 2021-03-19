@@ -1,0 +1,11 @@
+# Enable wifi
+wifi:
+  ssid: !secret sfCommonWifiSsid
+  password: !secret sfCommonWifiPwd
+  
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "$upperDevicename Hotspot"
+    password: !secret fallbackWifiPwd
+    
+captive_portal:
