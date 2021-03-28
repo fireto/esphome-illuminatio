@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP FDD8447L
+D MOSFET N-Channel 40V 21A TO252 Fairchild FDD8447L N-channel MOSFET Transistor, 57 A, 40 V, 3-Pin DPAK
+K
+F http://docs-emea.rs-online.com/webdocs/0f9a/0900766b80f9a3b3.pdf
+$ENDCMP
+#
+#End Doc Library
