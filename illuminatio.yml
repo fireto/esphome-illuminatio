@@ -54,6 +54,10 @@ switch:
 binary_sensor:
 
 # hallwaySwitch_key1
+  # set the minimum dimming value 0..1
+  - platform: template
+    id: light_0_dimMin
+    lambda: if (float(id(light_0).remote_values.get_brightness()) < .55) return true; else return false;
   - platform: gpio
     name: "hallwaySwitch_key1"
     id: $lightSwitch11
@@ -67,7 +71,17 @@ binary_sensor:
     # on single click, toggle light
     on_click:
       then:
-        light.toggle: light_0
+      - if:
+          condition:
+            light.is_off: light_0
+          then:
+            light.turn_on:
+              id: light_0
+              transition_length: 1s
+          else:
+            light.turn_off:
+              id: light_0
+              transition_length: 2s
     # on double click, turno on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -78,18 +92,21 @@ binary_sensor:
       then:
         light.turn_on: 
           id: light_0
-          brightness: 100%     
+          brightness: 100%
+          transition_length: 0s
     # on press, dimm up or down   
     on_press:
       then:
       - if:
           condition:
-            light.is_off: light_0
+            or:
+              - light.is_off: light_0
+              - binary_sensor.is_on: light_0_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: pcf1_0
+                binary_sensor.is_on: $lightSwitch11
               then:
                 - if:
                     condition:
@@ -108,14 +125,15 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: pcf1_0
+                  - binary_sensor.is_on: $lightSwitch11
                   - light.is_on: light_0
+                  - binary_sensor.is_off: light_0_dimMin
               then:
-                - light.dim_relative:
-                    id: light_0
-                    relative_brightness: -5%
-                    transition_length: 0.1s
-                - delay: 0.1s
+              - light.dim_relative:
+                  id: light_0
+                  relative_brightness: -5%
+                  transition_length: 0.1s
+              - delay: 0.1s
 
 # hallwaySwitch_key2
   - platform: gpio
@@ -222,13 +240,7 @@ binary_sensor:
     filters:
       - delayed_on_off: 30ms
 
-
-
-
-
-
-
-
+# bathroomSwitch_key1
   - platform: gpio
     name: "PCF8574_1 Pin #4"
     id: pcf1_4
@@ -240,6 +252,7 @@ binary_sensor:
     filters:
       - delayed_on_off: 30ms
 
+# bathroomSwitch_key2
   - platform: gpio
     name: "PCF8574_1 Pin #5"
     id: pcf1_5
@@ -251,6 +264,7 @@ binary_sensor:
     filters:
       - delayed_on_off: 30ms
 
+# bathroomSwitch_key3
   - platform: gpio
     name: "PCF8574_1 Pin #6"
     id: pcf1_6
@@ -262,6 +276,7 @@ binary_sensor:
     filters:
       - delayed_on_off: 30ms
 
+# bathroomSwitch_key4
   - platform: gpio
     name: "PCF8574_1 Pin #7"
     id: pcf1_7
@@ -280,7 +295,7 @@ binary_sensor:
 # load module for PCA9685 16-Channel 12-bit PWM/Servo Driver I2C
 # datasheet https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf
 pca9685:
-  - frequency: 500
+  - frequency: 1000
 
 #Define PCA9685 PWM chnnels and register them as outputs in ESPHome
 # pins 0-15 are defined as channel 0-15
