@@ -49,6 +49,15 @@ switch:
   - platform: restart
     name: Restart ESP
 
+# Temp sensor
+sensor:
+  - platform: bmp085
+    temperature:
+      name: "$devicename enclosure Temperature"
+    pressure:
+      name: "$devicename enclosure Pressure"
+    update_interval: 60s
+
 # Define behaviour on lightswitch presses
 # for detailed decription check switch_mappings.ods
 binary_sensor:
