@@ -31,6 +31,8 @@ bld/
 [Ll]og/
 [Ll]ogs/
 dev_illuminatio/
+illuminatio_fl1/
+illuminatio_fl2/
 .esphome
 
 # ignore passwords
@@ -360,3 +362,6 @@ MigrationBackup/
 
 # Libre office lock files
 .~lock.*
+
+# do not push v0.1 of the hardware
+Hardware/Revision*0.1

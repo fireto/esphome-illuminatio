@@ -5,3 +5,10 @@ in order to compile and deploy this project you need to get https://esphome.io
 
 
 ```podman run --rm -v "${PWD}":/config --device=/dev/ttyUSB0 -it esphome/esphome ./illuminatio.yml run```
+
+
+
+BOM
+
+LED Drivers connector cable:
+ CS-DSDMDB15MM-010 
