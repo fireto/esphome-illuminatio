@@ -46,22 +46,46 @@
   lightSwitch83: pcf4_6
   lightSwitch84: pcf4_7
 
-# #hallway
-#   hallwayCeiling:
-#   hallwayWall:
+###################################
+#             Floor 1             #
+# Light name              PCA pin #
+###################################
+  fl1hallwayCeilingLight:   pca1_0
+  fl1hallwayWallLight:      pca1_1
+  exteriorCeilingLight:     pca1_2
+  fl1bathroomCeilingLight:  pca1_3
+  fl1bathroomShowerLight:   pca1_4
+  fl1bathroomFloorHeating:  pca1_5
+  underStairLight:          pca1_6
+  livingroomCeilingLight:   pca1_7
+  livingroomWallLight:      pca1_8
+  livingroomTableLight:     pca1_9
+  kitchenCeilingLight:      pca1_10
+  stairsCeilingLight:       pca1_11
+  studyCeilingLight:        pca1_12
+  studyWallLight:           pca1_13
+  #xxxx                     pca1_14
+  caseFan:                  pca1_15
+###################################
 
-# #bathroom
-#   bathCeiling:
-#   bathMirror:
-#   bathFloorHeating:
-
-# #stairs
-#   stairUnder:
-#   stairCeiling:
-#   stairSteps:
-
-# #livingRoom
-#   livingCeiling:
-#   livingWall:
-#   livingTable:
-  
+###################################
+#              Floor 2            #
+# Light name              PCA pin #
+###################################
+  fl2hallwayCeilingLight:   pca1_0
+  bathroomCeilingLight:     pca1_1
+  bathroomShowerLight:      pca1_2
+  bathroomBathtubLight:     pca1_3
+  bathroomFloorHeating:     pca1_4
+  bedroom1CeilingLight:     pca1_5
+  bedroom1WallLight:        pca1_6
+  bedroom2CeilingLight:     pca1_7
+  bedroom2WallLight:        pca1_8
+  bedroom0CeilingLight1:    pca1_9
+  bedroom0CeilingLight2:    pca1_10
+  bedroom0WallLight:        pca1_11
+  bedroom0BedLight1:        pca1_12
+  bedroom0BedLight2:        pca1_13
+  #xxxx                     pca1_14
+  caseFan:                  pca1_15
+###################################
