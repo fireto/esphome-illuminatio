@@ -1,8 +1,8 @@
 ### Light controller main
 substitutions:
-  devicename: illuminatio_fl1
+  devicename: illuminatiofl1
   upperDevicename: Floor1 Lights Controller
-  <<: !include ioMapping.yml
+  # <<: !include ioMapping.yml
 
 esphome:
   name: $devicename
@@ -11,16 +11,15 @@ esphome:
 
 packages:
   # wifi: !include common/wifi.yml
-  # ethernet: !include common/ethernet.yml
-  # api: !include common/api.yml
-  # ota: !include common/ota.yml
-  # mqtt: !include common/mqtt.yml
+  ethernet: !include common/ethernet.yml
+  api: !include common/api.yml
+  ota: !include common/ota.yml
+  mqtt: !include common/mqtt.yml
   logger: !include common/logger.yml
-  # time: !include common/time.yml
-    
+  time: !include common/time.yml
+  webserver: !include common/webserver.yml
+
 i2c:
-#  sda: D1
-#  scl: D2
   scan: True
 
 # load module for PCF8574 Remote 8-Bit I/O Expanderfor I2C Bus
@@ -42,6 +41,22 @@ pcf8574:
     address: 0x3B
     pcf8575: False
 
+  # - id: 'pcf8574_1'
+  #   address: 0x20
+  #   pcf8575: False
+
+  # - id: 'pcf8574_2'
+  #   address: 0x21
+  #   pcf8575: False
+
+  # - id: 'pcf8574_3'
+  #   address: 0x22
+  #   pcf8575: False
+
+  # - id: 'pcf8574_4'
+  #   address: 0x23
+  #   pcf8575: False
+
 # Individual outputs
 switch:
   - platform: restart
@@ -60,7 +75,7 @@ sensor:
 # load module for PCA9685 16-Channel 12-bit PWM/Servo Driver I2C
 # datasheet https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf
 pca9685:
-  - frequency: 1000
+  - frequency: 500
 
 #Define PCA9685 PWM chnnels and register them as outputs in ESPHome
 # pins 0-15 are defined as channel 0-15
@@ -68,62 +83,78 @@ output:
   - platform: pca9685
     id: pca1_0
     channel: 0
+    inverted: True
 
   - platform: pca9685
     id: pca1_1
     channel: 1
+    inverted: True
 
   - platform: pca9685
     id: pca1_2
     channel: 2
+    inverted: True
 
   - platform: pca9685
     id: pca1_3
     channel: 3
+    inverted: True
 
   - platform: pca9685
     id: pca1_4
     channel: 4
+    inverted: True
 
   - platform: pca9685
     id: pca1_5
     channel: 5
+    inverted: True
 
   - platform: pca9685
     id: pca1_6
     channel: 6
+    inverted: True
 
   - platform: pca9685
     id: pca1_7
     channel: 7
+    inverted: True
 
   - platform: pca9685
     id: pca1_8
     channel: 8
+    inverted: True
 
   - platform: pca9685
     id: pca1_9
     channel: 9
+    inverted: True
 
   - platform: pca9685
     id: pca1_10
     channel: 10
+    inverted: True
 
   - platform: pca9685
     id: pca1_11
     channel: 11
+    inverted: True
 
   - platform: pca9685
     id: pca1_12
     channel: 12
+    inverted: True
 
   - platform: pca9685
     id: pca1_13
     channel: 13
+    inverted: True
 
+  #   output: pca1_14 not connected on the PCB
   # - platform: pca9685
   #   id: pca1_14
   #   channel: 14
+  #   inverted: True
 
   - platform: pca9685
     id: pca1_15
@@ -300,6 +331,12 @@ binary_sensor:
               - delay: 0.1s
 
 # hallwaySwitch_key2 controlling fl1hallwayWallLight
+  
+  # set the minimum dimming value to 0.55
+  - platform: template
+    id: fl1hallwayWallLight_dimMin
+    lambda: if (float(id(fl1hallwayWallLight).remote_values.get_brightness()) < .55) return true; else return false;
+
   - platform: gpio
     name: "hallwaySwitch_key2"
     id: lightSwitch12
@@ -313,7 +350,17 @@ binary_sensor:
   # on single click, toggle light
     on_click:
       then:
-        light.toggle: fl1hallwayWallLight
+      - if:
+          condition:
+            light.is_off: fl1hallwayWallLight
+          then:
+            light.turn_on:
+              id: fl1hallwayWallLight
+              transition_length: 1s
+          else:
+            light.turn_off:
+              id: fl1hallwayWallLight
+              transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -325,23 +372,33 @@ binary_sensor:
         light.turn_on: 
           id: fl1hallwayWallLight
           brightness: 100%
+          transition_length: 0s
   # on press, dimm up or down   
     on_press:
       then:
       - if:
           condition:
-            light.is_off: fl1hallwayWallLight
+            or:
+              - light.is_off: fl1hallwayWallLight
+              - binary_sensor.is_on: fl1hallwayWallLight_dimMin
           then:
           - delay: 0.5s
           - while:
               condition:
                 binary_sensor.is_on: lightSwitch12
               then:
+                - if:
+                    condition:
+                      light.is_off: fl1hallwayWallLight
+                    then:
+                    - light.turn_on:
+                        id: fl1hallwayWallLight
+                        brightness: 40%  
                 - light.dim_relative:
                     id: fl1hallwayWallLight
                     relative_brightness: 5%
                     transition_length: 0.1s
-                - delay: 1s
+                - delay: 0.1s
           else:
           - delay: 0.5s
           - while:
@@ -349,12 +406,13 @@ binary_sensor:
                 and:
                   - binary_sensor.is_on: lightSwitch12
                   - light.is_on: fl1hallwayWallLight
+                  - binary_sensor.is_off: fl1hallwayWallLight_dimMin
               then:
                 - light.dim_relative:
                     id: fl1hallwayWallLight
                     relative_brightness: -5%
                     transition_length: 0.1s
-                - delay: 1s
+                - delay: 0.1s
 
 # hallwaySwitch_key3 controlling exteriorCeilingLight
   - platform: gpio
@@ -367,10 +425,12 @@ binary_sensor:
       inverted: True
     filters:
       - delayed_on_off: 30ms  
-  # on single click, toggle light      
-    on_click:
+  # on press, toggle light      
+    on_press:
       then:
-        light.toggle: exteriorCeilingLight
+        light.toggle: 
+          id: exteriorCeilingLight
+          transition_length: 0s
 
 # hallwaySwitch_key4 is a meta key and usable only via Home Assistant
   - platform: gpio
@@ -562,10 +622,12 @@ binary_sensor:
       inverted: True
     filters:
       - delayed_on_off: 30ms
-  # on single click, toggle light
-    on_click:
+  # on press, toggle light
+    on_press:
       then:
-        light.toggle: fl1bathroomFloorHeating      
+        light.toggle: 
+          id: fl1bathroomFloorHeating
+          transition_length: 0s
 
 # bathroomSwitch_key4 is a meta key and usable only via Home Assistant
   - platform: gpio
@@ -591,10 +653,12 @@ binary_sensor:
       inverted: True
     filters:
       - delayed_on_off: 30ms
-  # on single click, toggle light
-    on_click:
+  # on press, toggle light
+    on_press:
       then:
-        light.toggle: underStairLight
+        light.toggle:
+          id: underStairLight
+          transition_length: 0s
 
 # underStairSwitch_key2 is a meta key and usable only via Home Assistant
   - platform: gpio
@@ -1141,10 +1205,12 @@ binary_sensor:
       inverted: True
     filters:
       - delayed_on_off: 30ms
-  # on single click, toggle light      
-    on_click:
+  # on press, toggle light      
+    on_press:
       then:
-        light.toggle: exteriorCeilingLight
+        light.toggle:
+          id: exteriorCeilingLight
+          transition_length: 0s
 
 
 # kitchenSwitch_key1 controlling kitchenCeilingLights
@@ -1615,7 +1681,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-# studySwitch_key3 is a meta key and usable only via Home Assistant
+# studySwitch_key3 controlling exteriorCeilingLight
   - platform: gpio
     name: "studySwitch_key3"
     id: lightSwitch83
@@ -1626,6 +1692,12 @@ binary_sensor:
       inverted: True
     filters:
       - delayed_on_off: 30ms
+  # on press, toggle light      
+    on_press:
+      then:
+        light.toggle:
+          id: exteriorCeilingLight
+          transition_length: 0s
 
 # studySwitch_key4 is a meta key and usable only via Home Assistant
   - platform: gpio

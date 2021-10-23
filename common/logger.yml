@@ -22,11 +22,11 @@ logger:
 # (Default) Everything up to this log level is logged.
 # Debug messages include the current readings from a sensor and status messages.
 # Color: cyan
-  # level:  DEBUG 
+  level:  DEBUG 
       
 # Like debug, but a few more messages that are usually deemed to be spam are also included.
 # Color: grey
-  level:  VERBOSE
+  # level:  VERBOSE
 
 # All internal messages are logged. 
 # Including all the data flowing through data buses like I2C, SPI or UART.

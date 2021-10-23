@@ -2,6 +2,7 @@
 wifi:
   ssid: !secret sfCommonWifiSsid
   password: !secret sfCommonWifiPwd
+  fast_connect: true
   
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:

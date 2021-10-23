@@ -46,27 +46,27 @@
   lightSwitch83: pcf4_6
   lightSwitch84: pcf4_7
 
-###################################
-#             Floor 1             #
-# Light name              PCA pin #
-###################################
-  fl1hallwayCeilingLight:   pca1_0
-  fl1hallwayWallLight:      pca1_1
-  exteriorCeilingLight:     pca1_2
-  fl1bathroomCeilingLight:  pca1_3
-  fl1bathroomShowerLight:   pca1_4
-  fl1bathroomFloorHeating:  pca1_5
-  underStairLight:          pca1_6
-  livingroomCeilingLight:   pca1_7
-  livingroomWallLight:      pca1_8
-  livingroomTableLight:     pca1_9
-  kitchenCeilingLight:      pca1_10
-  stairsCeilingLight:       pca1_11
-  studyCeilingLight:        pca1_12
-  studyWallLight:           pca1_13
-  #xxxx                     pca1_14
-  caseFan:                  pca1_15
-###################################
+###########################################################
+#                         Floor 1                         #
+# Light name                PCA pin   DIN screw terminal  #
+###########################################################
+  fl1hallwayCeilingLight:   pca1_0          1
+  fl1hallwayWallLight:      pca1_1          2
+  exteriorCeilingLight:     pca1_2          3
+  fl1bathroomCeilingLight:  pca1_3          4
+  fl1bathroomShowerLight:   pca1_4          5
+  fl1bathroomFloorHeating:  pca1_5          6
+  underStairLight:          pca1_6          7
+  livingroomCeilingLight:   pca1_7          8
+  livingroomWallLight:      pca1_8          9
+  livingroomTableLight:     pca1_9          10
+  kitchenCeilingLight:      pca1_10         11
+  stairsCeilingLight:       pca1_11         12
+  studyCeilingLight:        pca1_12         13
+  studyWallLight:           pca1_13         14
+  #xxxx                     pca1_14         X
+  fl1caseFan:               pca1_15         X
+###########################################################
 
 ###################################
 #              Floor 2            #
@@ -87,5 +87,5 @@
   bedroom0BedLight1:        pca1_12
   bedroom0BedLight2:        pca1_13
   #xxxx                     pca1_14
-  caseFan:                  pca1_15
+  fl2caseFan:               pca1_15
 ###################################

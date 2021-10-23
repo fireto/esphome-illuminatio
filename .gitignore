@@ -30,8 +30,8 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
-illuminatio_fl1/
-illuminatio_fl2/
+illuminatiofl1/
+illuminatiofl2/
 .esphome
 
 # ignore passwords
