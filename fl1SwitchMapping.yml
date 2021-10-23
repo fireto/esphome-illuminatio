@@ -1,0 +1,39 @@
+lightSwitch11Light: fl1hallwayCeilingLight
+lightSwitch12Light: fl1hallwayWallLight
+lightSwitch13Light: exteriorCeilingLight
+lightSwitch14Light: meta
+
+lightSwitch21Light: fl1bathroomCeilingLight
+lightSwitch22Light: fl1bathroomShowerLight
+lightSwitch23Light: fl1bathroomFloorHeating
+lightSwitch24Light: meta
+
+lightSwitch31Light: underStairLight
+lightSwitch32Light: meta
+lightSwitch33Light: meta
+lightSwitch34Light: meta
+
+lightSwitch41Light: livingroomCeilingLight
+lightSwitch42Light: livingroomWallLight
+lightSwitch43Light: livingroomTableLight
+lightSwitch44Light: kitchenCeilingLight
+
+lightSwitch51Light: livingroomCeilingLight
+lightSwitch52Light: livingroomWallLight
+lightSwitch53Light: meta
+lightSwitch54Light: exteriorCeilingLight
+
+lightSwitch61Light: kitchenCeilingLight
+lightSwitch62Light: meta
+lightSwitch63Light: livingroomTableLight
+lightSwitch64Light: meta
+
+lightSwitch71Light: stairsCeilingLight
+lightSwitch72Light: meta
+lightSwitch73Light: meta
+lightSwitch74Light: meta
+
+lightSwitch81Light: studyCeilingLight
+lightSwitch82Light: studyWallLight
+lightSwitch83Light: exteriorCeilingLight
+lightSwitch84Light: meta
