@@ -1,0 +1,39 @@
+fl2LightSwitch11Light: fl2hallwayCeilingLight
+fl2LightSwitch12Light: fl2hallwayCeilingLight
+fl2LightSwitch13Light: meta
+fl2LightSwitch14Light: meta
+
+fl2LightSwitch21Light: fl2bathroomCeilingLight
+fl2LightSwitch22Light: fl2bathroomShowerLight
+fl2LightSwitch23Light: fl2bathroomBathtubLight
+fl2LightSwitch24Light: fl2bathroomFloorHeating
+
+fl2LightSwitch31Light: bedroom1CeilingLight
+fl2LightSwitch32Light: bedroom1WallLight
+fl2LightSwitch33Light: meta
+fl2LightSwitch34Light: meta
+
+fl2LightSwitch41Light: bedroom2CeilingLight
+fl2LightSwitch42Light: bedroom2WallLight
+fl2LightSwitch43Light: meta
+fl2LightSwitch44Light: meta
+
+fl2LightSwitch51Light: bedroom0CeilingLight1
+fl2LightSwitch52Light: bedroom0CeilingLight2
+fl2LightSwitch53Light: bedroom0WallLight
+fl2LightSwitch54Light: meta
+
+fl2LightSwitch61Light: bedroom0CeilingLight2
+fl2LightSwitch62Light: bedroom0WallLight
+fl2LightSwitch63Light: meta
+fl2LightSwitch64Light: meta
+
+fl2LightSwitch71Light: bedroom0CeilingLight2
+fl2LightSwitch72Light: bedroom0WallLight
+fl2LightSwitch73Light: bedroom0CeilingLight1
+fl2LightSwitch74Light: bedroom0BedLight1
+
+fl2LightSwitch81Light: bedroom0BedLight2
+fl2LightSwitch82Light: bedroom0CeilingLight1
+fl2LightSwitch83Light: bedroom0WallLight
+fl2LightSwitch84Light: bedroom0CeilingLight2
