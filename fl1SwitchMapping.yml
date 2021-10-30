@@ -1,39 +1,39 @@
-lightSwitch11Light: fl1hallwayCeilingLight
-lightSwitch12Light: fl1hallwayWallLight
-lightSwitch13Light: exteriorCeilingLight
-lightSwitch14Light: meta
+fl1LightSwitch11Light: fl1HallwayCeilingLight
+fl1LightSwitch12Light: fl1HallwayWallLight
+fl1LightSwitch13Light: fl1ExteriorCeilingLight
+fl1LightSwitch14Light: meta
 
-lightSwitch21Light: fl1bathroomCeilingLight
-lightSwitch22Light: fl1bathroomShowerLight
-lightSwitch23Light: fl1bathroomFloorHeating
-lightSwitch24Light: meta
+fl1LightSwitch21Light: fl1BathroomCeilingLight
+fl1LightSwitch22Light: fl1BathroomShowerLight
+fl1LightSwitch23Light: fl1BathroomFloorHeating
+fl1LightSwitch24Light: meta
 
-lightSwitch31Light: underStairLight
-lightSwitch32Light: meta
-lightSwitch33Light: meta
-lightSwitch34Light: meta
+fl1LightSwitch31Light: fl1UnderStairLight
+fl1LightSwitch32Light: meta
+fl1LightSwitch33Light: meta
+fl1LightSwitch34Light: meta
 
-lightSwitch41Light: livingroomCeilingLight
-lightSwitch42Light: livingroomWallLight
-lightSwitch43Light: livingroomTableLight
-lightSwitch44Light: kitchenCeilingLight
+fl1LightSwitch41Light: fl1LivingroomCeilingLight
+fl1LightSwitch42Light: fl1LivingroomWallLight
+fl1LightSwitch43Light: fl1LivingroomTableLight
+fl1LightSwitch44Light: fl1KitchenCeilingLight
 
-lightSwitch51Light: livingroomCeilingLight
-lightSwitch52Light: livingroomWallLight
-lightSwitch53Light: meta
-lightSwitch54Light: exteriorCeilingLight
+fl1LightSwitch51Light: fl1LivingroomCeilingLight
+fl1LightSwitch52Light: fl1LivingroomWallLight
+fl1LightSwitch53Light: meta
+fl1LightSwitch54Light: fl1ExteriorCeilingLight
 
-lightSwitch61Light: kitchenCeilingLight
-lightSwitch62Light: meta
-lightSwitch63Light: livingroomTableLight
-lightSwitch64Light: meta
+fl1LightSwitch61Light: fl1KitchenCeilingLight
+fl1LightSwitch62Light: meta
+fl1LightSwitch63Light: fl1LivingroomTableLight
+fl1LightSwitch64Light: meta
 
-lightSwitch71Light: stairsCeilingLight
-lightSwitch72Light: meta
-lightSwitch73Light: meta
-lightSwitch74Light: meta
+fl1LightSwitch71Light: fl1StairsCeilingLight
+fl1LightSwitch72Light: meta
+fl1LightSwitch73Light: meta
+fl1LightSwitch74Light: meta
 
-lightSwitch81Light: studyCeilingLight
-lightSwitch82Light: studyWallLight
-lightSwitch83Light: exteriorCeilingLight
-lightSwitch84Light: meta
+fl1LightSwitch81Light: fl1StudyCeilingLight
+fl1LightSwitch82Light: fl1StudyWallLight
+fl1LightSwitch83Light: fl1ExteriorCeilingLight
+fl1LightSwitch84Light: meta

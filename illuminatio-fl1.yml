@@ -166,73 +166,73 @@ output:
 # https://esphome.io/components/light/index.html
 light:  
   - platform: monochromatic
-    name: "fl1hallwayCeilingLight"
-    id: fl1hallwayCeilingLight
+    name: "fl1HallwayCeilingLight"
+    id: fl1HallwayCeilingLight
     output: pca1_0
 
   - platform: monochromatic
-    name: "fl1hallwayWallLight"
-    id: fl1hallwayWallLight
+    name: "fl1HallwayWallLight"
+    id: fl1HallwayWallLight
     output: pca1_1
 
   - platform: monochromatic
-    name: "exteriorCeilingLight"
-    id: exteriorCeilingLight
+    name: "fl1ExteriorCeilingLight"
+    id: fl1ExteriorCeilingLight
     output: pca1_2
 
   - platform: monochromatic
-    name: "fl1bathroomCeilingLight"
-    id: fl1bathroomCeilingLight
+    name: "fl1BathroomCeilingLight"
+    id: fl1BathroomCeilingLight
     output: pca1_3
     
   - platform: monochromatic
-    name: "fl1bathroomShowerLight"
-    id: fl1bathroomShowerLight
+    name: "fl1BathroomShowerLight"
+    id: fl1BathroomShowerLight
     output: pca1_4
         
   - platform: monochromatic
-    name: "fl1bathroomFloorHeating"
-    id: fl1bathroomFloorHeating
+    name: "fl1BathroomFloorHeating"
+    id: fl1BathroomFloorHeating
     output: pca1_5
         
   - platform: monochromatic
-    name: "underStairLight"
-    id: underStairLight
+    name: "fl1UnderStairLight"
+    id: fl1UnderStairLight
     output: pca1_6
         
   - platform: monochromatic
-    name: "livingroomCeilingLight"
-    id: livingroomCeilingLight
+    name: "fl1LivingroomCeilingLight"
+    id: fl1LivingroomCeilingLight
     output: pca1_7
     
   - platform: monochromatic
-    name: "livingroomWallLight"
-    id: livingroomWallLight
+    name: "fl1LivingroomWallLight"
+    id: fl1LivingroomWallLight
     output: pca1_8
         
   - platform: monochromatic
-    name: "livingroomTableLight"
-    id: livingroomTableLight
+    name: "fl1LivingroomTableLight"
+    id: fl1LivingroomTableLight
     output: pca1_9
         
   - platform: monochromatic
-    name: "kitchenCeilingLight"
-    id: kitchenCeilingLight
+    name: "fl1KitchenCeilingLight"
+    id: fl1KitchenCeilingLight
     output: pca1_10
 
   - platform: monochromatic
-    name: "stairsCeilingLight"
-    id: stairsCeilingLight
+    name: "fl1StairsCeilingLight"
+    id: fl1StairsCeilingLight
     output: pca1_11
         
   - platform: monochromatic
-    name: "${lightSwitch81Light}"
-    id: ${lightSwitch81Light}
+    name: "fl1StudyCeilingLight"
+    id: fl1StudyCeilingLight
     output: pca1_12
         
   - platform: monochromatic
-    name: "studyWallLight"
-    id: studyWallLight
+    name: "fl1StudyWallLight"
+    id: fl1StudyWallLight
     output: pca1_13
     
   #   output: pca1_14 not connected on the PCB
@@ -247,21 +247,21 @@ light:
 # for detailed decription check switch_mappings.ods
 binary_sensor:
 
-# hallwaySwitch_key1 controlling fl1hallwayCeilingLight
+#11 fl1HallwaySwitch_key1 controlling fl1HallwayCeilingLight
  
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch11Light}_dimMin
-    lambda: if (float(id(${lightSwitch11Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    id: ${fl1LightSwitch11Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch11Light}).remote_values.get_brightness()) < .55) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
-    id: ${lightSwitch11Light}_dimMax
-    lambda: if (float(id(${lightSwitch11Light}).remote_values.get_brightness()) >= 1) return true; else return false;
+    id: ${fl1LightSwitch11Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch11Light}).remote_values.get_brightness()) >= 1) return true; else return false;
 
   - platform: gpio
-    name: "hallwaySwitch_key1"
-    id: lightSwitch11
+    name: "fl1HallwaySwitch_key1"
+    id: fl1LightSwitch11
     pin:
       pcf8574: pcf8574_1
       number: 0
@@ -274,14 +274,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch11Light}
+            light.is_off: ${fl1LightSwitch11Light}
           then:
             light.turn_on:
-              id: ${lightSwitch11Light}
+              id: ${fl1LightSwitch11Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch11Light}
+              id: ${fl1LightSwitch11Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -292,7 +292,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch11Light}
+          id: ${fl1LightSwitch11Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -301,25 +301,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch11Light}
-              - binary_sensor.is_on: ${lightSwitch11Light}_dimMin
+              - light.is_off: ${fl1LightSwitch11Light}
+              - binary_sensor.is_on: ${fl1LightSwitch11Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch11
-                  - binary_sensor.is_off: ${lightSwitch11Light}_dimMax
+                  - binary_sensor.is_on: fl1LightSwitch11
+                  - binary_sensor.is_off: ${fl1LightSwitch11Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch11Light}
+                      light.is_off: ${fl1LightSwitch11Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch11Light}
+                        id: ${fl1LightSwitch11Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch11Light}
+                    id: ${fl1LightSwitch11Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -328,31 +328,31 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch11
-                  - light.is_on: ${lightSwitch11Light}
-                  - binary_sensor.is_off: ${lightSwitch11Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch11
+                  - light.is_on: ${fl1LightSwitch11Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch11Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch11Light}
+                  id: ${fl1LightSwitch11Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# hallwaySwitch_key2 controlling fl1hallwayWallLight
+#12 fl1HallwaySwitch_key2 controlling fl1HallwayWallLight
   
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch12Light}_dimMin
-    lambda: if (float(id(${lightSwitch12Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    id: ${fl1LightSwitch12Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch12Light}).remote_values.get_brightness()) < .55) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
-    id: ${lightSwitch12Light}_dimMax
-    lambda: if (float(id(${lightSwitch12Light}).remote_values.get_brightness()) >= 1) return true; else return false;
+    id: ${fl1LightSwitch12Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch12Light}).remote_values.get_brightness()) >= 1) return true; else return false;
 
   - platform: gpio
-    name: "hallwaySwitch_key2"
-    id: lightSwitch12
+    name: "fl1HallwaySwitch_key2"
+    id: fl1LightSwitch12
     pin:
       pcf8574: pcf8574_1
       number: 1
@@ -365,14 +365,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch12Light}
+            light.is_off: ${fl1LightSwitch12Light}
           then:
             light.turn_on:
-              id: ${lightSwitch12Light}
+              id: ${fl1LightSwitch12Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch12Light}
+              id: ${fl1LightSwitch12Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -383,7 +383,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch12Light}
+          id: ${fl1LightSwitch12Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -392,25 +392,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch12Light}
-              - binary_sensor.is_on: ${lightSwitch12Light}_dimMin
+              - light.is_off: ${fl1LightSwitch12Light}
+              - binary_sensor.is_on: ${fl1LightSwitch12Light}_dimMin
           then:
           - delay: 0.5s
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch12
-                  - binary_sensor.is_off: ${lightSwitch12Light}_dimMax
+                  - binary_sensor.is_on: fl1LightSwitch12
+                  - binary_sensor.is_off: ${fl1LightSwitch12Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch12Light}
+                      light.is_off: ${fl1LightSwitch12Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch12Light}
+                        id: ${fl1LightSwitch12Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch12Light}
+                    id: ${fl1LightSwitch12Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -419,20 +419,20 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch12
-                  - light.is_on: ${lightSwitch12Light}
-                  - binary_sensor.is_off: ${lightSwitch12Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch12
+                  - light.is_on: ${fl1LightSwitch12Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch12Light}_dimMin
               then:
                 - light.dim_relative:
-                    id: ${lightSwitch12Light}
+                    id: ${fl1LightSwitch12Light}
                     relative_brightness: -5%
                     transition_length: 0.1s
                 - delay: 0.1s
 
-# hallwaySwitch_key3 controlling exteriorCeilingLight
+#13 fl1HallwaySwitch_key3 controlling fl1ExteriorCeilingLight
   - platform: gpio
-    name: "hallwaySwitch_key3"
-    id: lightSwitch13
+    name: "fl1HallwaySwitch_key3"
+    id: fl1LightSwitch13
     pin:
       pcf8574: pcf8574_1
       number: 2
@@ -444,13 +444,13 @@ binary_sensor:
     on_press:
       then:
         light.toggle: 
-          id: ${lightSwitch13Light}
+          id: ${fl1LightSwitch13Light}
           transition_length: 0s
 
-# hallwaySwitch_key4 is a meta key and usable only via Home Assistant
+#14 fl1HallwaySwitch_key4 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "hallwaySwitch_key4"
-    id: lightSwitch14
+    name: "fl1HallwaySwitch_key4"
+    id: fl1LightSwitch14
     pin:
       pcf8574: pcf8574_1
       number: 3
@@ -460,20 +460,20 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-# bathroomSwitch_key1 controlling fl1bathroomCeilingLight
+#21 fl1BathroomSwitch_key1 controlling fl1BathroomCeilingLight
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch21Light}_dimMin
-    lambda: if (float(id(${lightSwitch21Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    id: ${fl1LightSwitch21Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch21Light}).remote_values.get_brightness()) < .55) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
-    id: ${lightSwitch21Light}_dimMax
-    lambda: if (float(id(${lightSwitch21Light}).remote_values.get_brightness()) >= 1) return true; else return false;
+    id: ${fl1LightSwitch21Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch21Light}).remote_values.get_brightness()) >= 1) return true; else return false;
 
   - platform: gpio
-    name: "bathroomSwitch_key1"
-    id: lightSwitch21
+    name: "fl1BathroomSwitch_key1"
+    id: fl1LightSwitch21
     pin:
       pcf8574: pcf8574_1
       number: 4
@@ -486,14 +486,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch21Light}
+            light.is_off: ${fl1LightSwitch21Light}
           then:
             light.turn_on:
-              id: ${lightSwitch21Light}
+              id: ${fl1LightSwitch21Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch21Light}
+              id: ${fl1LightSwitch21Light}
               transition_length: 3s
   # on double click, turno on ligh with brighness 100%
     on_multi_click:
@@ -504,7 +504,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch21Light}
+          id: ${fl1LightSwitch21Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -513,25 +513,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch21Light}
-              - binary_sensor.is_on: ${lightSwitch21Light}_dimMin
+              - light.is_off: ${fl1LightSwitch21Light}
+              - binary_sensor.is_on: ${fl1LightSwitch21Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch21
-                  - binary_sensor.is_off: ${lightSwitch21Light}_dimMax
+                  - binary_sensor.is_on: fl1LightSwitch21
+                  - binary_sensor.is_off: ${fl1LightSwitch21Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch21Light}
+                      light.is_off: ${fl1LightSwitch21Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch21Light}
+                        id: ${fl1LightSwitch21Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch21Light}
+                    id: ${fl1LightSwitch21Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -540,30 +540,30 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch21
-                  - light.is_on: ${lightSwitch21Light}
-                  - binary_sensor.is_off: ${lightSwitch21Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch21
+                  - light.is_on: ${fl1LightSwitch21Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch21Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch21Light}
+                  id: ${fl1LightSwitch21Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# bathroomSwitch_key2 controlling fl1bathroomShowerLight
+#22 fl1BathroomSwitch_key2 controlling fl1BathroomShowerLight
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch22Light}_dimMin
-    lambda: if (float(id(${lightSwitch22Light}).remote_values.get_brightness()) < .55) return true; else return false;    
+    id: ${fl1LightSwitch22Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch22Light}).remote_values.get_brightness()) < .55) return true; else return false;    
 
   # set the maximum dimming value to 1
   - platform: template
-    id: ${lightSwitch22Light}_dimMax
-    lambda: if (float(id(${lightSwitch22Light}).remote_values.get_brightness()) >= 1) return true; else return false;
+    id: ${fl1LightSwitch22Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch22Light}).remote_values.get_brightness()) >= 1) return true; else return false;
 
   - platform: gpio
-    name: "bathroomSwitch_key2"
-    id: lightSwitch22
+    name: "fl1BathroomSwitch_key2"
+    id: fl1LightSwitch22
     pin:
       pcf8574: pcf8574_1
       number: 5
@@ -576,14 +576,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch22Light}
+            light.is_off: ${fl1LightSwitch22Light}
           then:
             light.turn_on:
-              id: ${lightSwitch22Light}
+              id: ${fl1LightSwitch22Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch22Light}
+              id: ${fl1LightSwitch22Light}
               transition_length: 3s
   # on double click, turno on ligh with brighness 100%
     on_multi_click:
@@ -594,7 +594,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch22Light}
+          id: ${fl1LightSwitch22Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -603,25 +603,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch22Light}
-              - binary_sensor.is_on: ${lightSwitch22Light}_dimMin
+              - light.is_off: ${fl1LightSwitch22Light}
+              - binary_sensor.is_on: ${fl1LightSwitch22Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch22
-                  - binary_sensor.is_off: ${lightSwitch22Light}_dimMax
+                  - binary_sensor.is_on: fl1LightSwitch22
+                  - binary_sensor.is_off: ${fl1LightSwitch22Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch22Light}
+                      light.is_off: ${fl1LightSwitch22Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch22Light}
+                        id: ${fl1LightSwitch22Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch22Light}
+                    id: ${fl1LightSwitch22Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -630,20 +630,20 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch22
-                  - light.is_on: ${lightSwitch22Light}
-                  - binary_sensor.is_off: ${lightSwitch22Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch22
+                  - light.is_on: ${fl1LightSwitch22Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch22Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch22Light}
+                  id: ${fl1LightSwitch22Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# bathroomSwitch_key3 controlling fl1bathroomFloorHeating
+#23 fl1BathroomSwitch_key3 controlling fl1BathroomFloorHeating
   - platform: gpio
-    name: "bathroomSwitch_key3"
-    id: lightSwitch23
+    name: "fl1BathroomSwitch_key3"
+    id: fl1LightSwitch23
     pin:
       pcf8574: pcf8574_1
       number: 6
@@ -655,13 +655,13 @@ binary_sensor:
     on_press:
       then:
         light.toggle: 
-          id: ${lightSwitch23Light}
+          id: ${fl1LightSwitch23Light}
           transition_length: 0s
 
-# bathroomSwitch_key4 is a meta key and usable only via Home Assistant
+#24 fl1BathroomSwitch_key4 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "bathroomSwitch_key4"
-    id: lightSwitch24
+    name: "fl1BathroomSwitch_key4"
+    id: fl1LightSwitch24
     pin:
       pcf8574: pcf8574_1
       number: 7
@@ -671,10 +671,10 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-# underStairSwitch_key1 controlling underStairLight
+#31 fl1UnderStairSwitch_key1 controlling fl1UnderStairLight
   - platform: gpio
-    name: "underStairSwitch_key1"
-    id: lightSwitch31
+    name: "fl1UnderStairSwitch_key1"
+    id: fl1LightSwitch31
     pin:
       pcf8574: pcf8574_2
       number: 0
@@ -686,13 +686,13 @@ binary_sensor:
     on_press:
       then:
         light.toggle:
-          id: ${lightSwitch31Light}
+          id: ${fl1LightSwitch31Light}
           transition_length: 0s
 
-# underStairSwitch_key2 is a meta key and usable only via Home Assistant
+#32 fl1UnderStairSwitch_key2 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "underStairSwitch_key2"
-    id: lightSwitch32
+    name: "fl1UnderStairSwitch_key2"
+    id: fl1LightSwitch32
     pin:
       pcf8574: pcf8574_2
       number: 1
@@ -701,10 +701,10 @@ binary_sensor:
     filters:
       - delayed_on_off: 30ms
 
-# underStairSwitch_key3 is a meta key and usable only via Home Assistant
+#33 fl1UnderStairSwitch_key3 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "underStairSwitch_key3"
-    id: lightSwitch33
+    name: "fl1UnderStairSwitch_key3"
+    id: fl1LightSwitch33
     pin:
       pcf8574: pcf8574_2
       number: 2
@@ -713,10 +713,10 @@ binary_sensor:
     filters:
       - delayed_on_off: 30ms
 
-# underStairSwitch_key4 is a meta key and usable only via Home Assistant
+#34 fl1UnderStairSwitch_key4 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "underStairSwitch_key4"
-    id: lightSwitch34
+    name: "fl1UnderStairSwitch_key4"
+    id: fl1LightSwitch34
     pin:
       pcf8574: pcf8574_2
       number: 3
@@ -726,14 +726,20 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-# livingroomSwitch_key1 controlling livingroomCeilingLight
+#41 fl1LivingroomSwitch_key1 controlling fl1LivingroomCeilingLight
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch41Light}_dimMin
-    lambda: if (float(id(${lightSwitch41Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    id: ${fl1LightSwitch41Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch41Light}).remote_values.get_brightness()) < .55) return true; else return false;
+
+  # set the maximum dimming value to 1
+  - platform: template
+    id: ${fl1LightSwitch41Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch41Light}).remote_values.get_brightness()) >= 1) return true; else return false;
+
   - platform: gpio
-    name: "livingroomSwitch_key1"
-    id: lightSwitch41
+    name: "fl1LivingroomSwitch_key1"
+    id: fl1LightSwitch41
     pin:
       pcf8574: pcf8574_2
       number: 4
@@ -746,14 +752,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch41Light}
+            light.is_off: ${fl1LightSwitch41Light}
           then:
             light.turn_on:
-              id: ${lightSwitch41Light}
+              id: ${fl1LightSwitch41Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch41Light}
+              id: ${fl1LightSwitch41Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -764,7 +770,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch41Light}
+          id: ${fl1LightSwitch41Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -773,23 +779,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch41Light}
-              - binary_sensor.is_on: ${lightSwitch41Light}_dimMin
+              - light.is_off: ${fl1LightSwitch41Light}
+              - binary_sensor.is_on: ${fl1LightSwitch41Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch41
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch41
+                  - binary_sensor.is_off: ${fl1LightSwitch41Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch41Light}
+                      light.is_off: ${fl1LightSwitch41Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch41Light}
+                        id: ${fl1LightSwitch41Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch41Light}
+                    id: ${fl1LightSwitch41Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -798,24 +806,30 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch41
-                  - light.is_on: ${lightSwitch41Light}
-                  - binary_sensor.is_off: ${lightSwitch41Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch41
+                  - light.is_on: ${fl1LightSwitch41Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch41Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch41Light}
+                  id: ${fl1LightSwitch41Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# livingroomSwitch_key2 controlling livingroomWallLights
+#42 fl1LivingroomSwitch_key2 controlling fl1LivingroomWallLights
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch42Light}_dimMin
-    lambda: if (float(id(${lightSwitch42Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    id: ${fl1LightSwitch42Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch42Light}).remote_values.get_brightness()) < .55) return true; else return false;
+
+  # set the maximum dimming value to 1
+  - platform: template
+    id: ${fl1LightSwitch42Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch42Light}).remote_values.get_brightness()) >= 1) return true; else return false;
+
   - platform: gpio
-    name: "livingroomSwitch_key2"
-    id: lightSwitch42
+    name: "fl1LivingroomSwitch_key2"
+    id: fl1LightSwitch42
     pin:
       pcf8574: pcf8574_2
       number: 5
@@ -828,14 +842,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch42Light}
+            light.is_off: ${fl1LightSwitch42Light}
           then:
             light.turn_on:
-              id: ${lightSwitch42Light}
+              id: ${fl1LightSwitch42Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch42Light}
+              id: ${fl1LightSwitch42Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -846,7 +860,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch42Light}
+          id: ${fl1LightSwitch42Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -855,23 +869,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch42Light}
-              - binary_sensor.is_on: ${lightSwitch42Light}_dimMin
+              - light.is_off: ${fl1LightSwitch42Light}
+              - binary_sensor.is_on: ${fl1LightSwitch42Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch42
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch42
+                  - binary_sensor.is_off: ${fl1LightSwitch42Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch42Light}
+                      light.is_off: ${fl1LightSwitch42Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch42Light}
+                        id: ${fl1LightSwitch42Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch42Light}
+                    id: ${fl1LightSwitch42Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -880,24 +896,30 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch42
-                  - light.is_on: ${lightSwitch42Light}
-                  - binary_sensor.is_off: ${lightSwitch42Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch42
+                  - light.is_on: ${fl1LightSwitch42Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch42Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch42Light}
+                  id: ${fl1LightSwitch42Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# livingroomSwitch_key3 controlling livingroomTableLights
+#43 fl1LivingroomSwitch_key3 controlling fl1LivingroomTableLights
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch43Light}_dimMin
-    lambda: if (float(id(${lightSwitch43Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    id: ${fl1LightSwitch43Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch43Light}).remote_values.get_brightness()) < .55) return true; else return false;
+
+  # set the maximum dimming value to 1
+  - platform: template
+    id: ${fl1LightSwitch43Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch43Light}).remote_values.get_brightness()) >= 1) return true; else return false;
+
   - platform: gpio
-    name: "livingroomSwitch_key3"
-    id: lightSwitch43
+    name: "fl1LivingroomSwitch_key3"
+    id: fl1LightSwitch43
     pin:
       pcf8574: pcf8574_2
       number: 6
@@ -910,14 +932,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch43Light}
+            light.is_off: ${fl1LightSwitch43Light}
           then:
             light.turn_on:
-              id: ${lightSwitch43Light}
+              id: ${fl1LightSwitch43Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch43Light}
+              id: ${fl1LightSwitch43Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -928,7 +950,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch43Light}
+          id: ${fl1LightSwitch43Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -937,23 +959,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch43Light}
-              - binary_sensor.is_on: ${lightSwitch43Light}_dimMin
+              - light.is_off: ${fl1LightSwitch43Light}
+              - binary_sensor.is_on: ${fl1LightSwitch43Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch43
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch43
+                  - binary_sensor.is_off: ${fl1LightSwitch43Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch43Light}
+                      light.is_off: ${fl1LightSwitch43Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch43Light}
+                        id: ${fl1LightSwitch43Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch43Light}
+                    id: ${fl1LightSwitch43Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -962,24 +986,30 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch43
-                  - light.is_on: ${lightSwitch43Light}
-                  - binary_sensor.is_off: ${lightSwitch43Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch43
+                  - light.is_on: ${fl1LightSwitch43Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch43Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch43Light}
+                  id: ${fl1LightSwitch43Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# livingroomSwitch_key4 controlling kitchenCeilingLights
+#44 fl1LivingroomSwitch_key4 controlling fl1KitchenCeilingLights
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch44Light}_dimMin
-    lambda: if (float(id(${lightSwitch44Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    id: ${fl1LightSwitch44Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch44Light}).remote_values.get_brightness()) < .55) return true; else return false;
+
+  # set the maximum dimming value to 1
+  - platform: template
+    id: ${fl1LightSwitch44Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch44Light}).remote_values.get_brightness()) >= 1) return true; else return false;
+
   - platform: gpio
-    name: "livingroomSwitch_key4"
-    id: lightSwitch44
+    name: "fl1LivingroomSwitch_key4"
+    id: fl1LightSwitch44
     pin:
       pcf8574: pcf8574_2
       number: 7
@@ -992,14 +1022,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch44Light}
+            light.is_off: ${fl1LightSwitch44Light}
           then:
             light.turn_on:
-              id: ${lightSwitch44Light}
+              id: ${fl1LightSwitch44Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch44Light}
+              id: ${fl1LightSwitch44Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -1010,7 +1040,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch44Light}
+          id: ${fl1LightSwitch44Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -1019,23 +1049,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch44Light}
-              - binary_sensor.is_on: ${lightSwitch44Light}_dimMin
+              - light.is_off: ${fl1LightSwitch44Light}
+              - binary_sensor.is_on: ${fl1LightSwitch44Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch44
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch44
+                  - binary_sensor.is_off: ${fl1LightSwitch44Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch44Light}
+                      light.is_off: ${fl1LightSwitch44Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch44Light}
+                        id: ${fl1LightSwitch44Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch44Light}
+                    id: ${fl1LightSwitch44Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -1044,21 +1076,21 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch44
-                  - light.is_on: ${lightSwitch44Light}
-                  - binary_sensor.is_off: ${lightSwitch44Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch44
+                  - light.is_on: ${fl1LightSwitch44Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch44Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch44Light}
+                  id: ${fl1LightSwitch44Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
 
-# livingroomSwitch2_key1 controlling livingroomCeilingLight
+#51 fl1LivingroomSwitch2_key1 controlling fl1LivingroomCeilingLight
   - platform: gpio
-    name: "livingroomSwitch2_key1"
-    id: lightSwitch51
+    name: "fl1LivingroomSwitch2_key1"
+    id: fl1LightSwitch51
     pin:
       pcf8574: pcf8574_3
       number: 0
@@ -1071,14 +1103,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch51Light}
+            light.is_off: ${fl1LightSwitch51Light}
           then:
             light.turn_on:
-              id: ${lightSwitch51Light}
+              id: ${fl1LightSwitch51Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch51Light}
+              id: ${fl1LightSwitch51Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -1089,7 +1121,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch51Light}
+          id: ${fl1LightSwitch51Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -1098,23 +1130,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch51Light}
-              - binary_sensor.is_on: ${lightSwitch51Light}_dimMin
+              - light.is_off: ${fl1LightSwitch51Light}
+              - binary_sensor.is_on: ${fl1LightSwitch51Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch51
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch51
+                  - binary_sensor.is_off: ${fl1LightSwitch51Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch51Light}
+                      light.is_off: ${fl1LightSwitch51Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch51Light}
+                        id: ${fl1LightSwitch51Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch51Light}
+                    id: ${fl1LightSwitch51Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -1123,20 +1157,20 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch51
-                  - light.is_on: ${lightSwitch51Light}
-                  - binary_sensor.is_off: ${lightSwitch51Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch51
+                  - light.is_on: ${fl1LightSwitch51Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch51Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch51Light}
+                  id: ${fl1LightSwitch51Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# livingroomSwitch2_key2 controlling livingroomWallLights
+#52 fl1LivingroomSwitch2_key2 controlling fl1LivingroomWallLights
   - platform: gpio
-    name: "livingroomSwitch2_key2"
-    id: lightSwitch52
+    name: "fl1LivingroomSwitch2_key2"
+    id: fl1LightSwitch52
     pin:
       pcf8574: pcf8574_3
       number: 1
@@ -1149,14 +1183,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch52Light}
+            light.is_off: ${fl1LightSwitch52Light}
           then:
             light.turn_on:
-              id: ${lightSwitch52Light}
+              id: ${fl1LightSwitch52Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch52Light}
+              id: ${fl1LightSwitch52Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -1167,7 +1201,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch52Light}
+          id: ${fl1LightSwitch52Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -1176,23 +1210,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch52Light}
-              - binary_sensor.is_on: ${lightSwitch52Light}_dimMin
+              - light.is_off: ${fl1LightSwitch52Light}
+              - binary_sensor.is_on: ${fl1LightSwitch52Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch52
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch52
+                  - binary_sensor.is_off: ${fl1LightSwitch52Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch52Light}
+                      light.is_off: ${fl1LightSwitch52Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch52Light}
+                        id: ${fl1LightSwitch52Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch52Light}
+                    id: ${fl1LightSwitch52Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -1201,20 +1237,20 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch52
-                  - light.is_on: ${lightSwitch52Light}
-                  - binary_sensor.is_off: ${lightSwitch52Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch52
+                  - light.is_on: ${fl1LightSwitch52Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch52Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch52Light}
+                  id: ${fl1LightSwitch52Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# livingroomSwitch2_key3 is a meta key and usable only via Home Assistant
+#53 fl1LivingroomSwitch2_key3 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "livingroomSwitch2_key3"
-    id: lightSwitch53
+    name: "fl1LivingroomSwitch2_key3"
+    id: fl1LightSwitch53
     pin:
       pcf8574: pcf8574_3
       number: 2
@@ -1223,10 +1259,10 @@ binary_sensor:
     filters:
       - delayed_on_off: 30ms
 
-# livingroomSwitch2_key4 controlling exteriorCeilingLight
+#54 fl1LivingroomSwitch2_key4 controlling fl1ExteriorCeilingLight
   - platform: gpio
-    name: "livingroomSwitch2_key4"
-    id: lightSwitch54
+    name: "fl1LivingroomSwitch2_key4"
+    id: fl1LightSwitch54
     pin:
       pcf8574: pcf8574_3
       number: 3
@@ -1238,14 +1274,14 @@ binary_sensor:
     on_press:
       then:
         light.toggle:
-          id: ${lightSwitch54Light}
+          id: ${fl1LightSwitch54Light}
           transition_length: 0s
 
 
-# kitchenSwitch_key1 controlling kitchenCeilingLights
+#61 fl1KitchenSwitch_key1 controlling fl1KitchenCeilingLights
   - platform: gpio
-    name: "kitchenSwitch_key1"
-    id: lightSwitch61
+    name: "fl1KitchenSwitch_key1"
+    id: fl1LightSwitch61
     pin:
       pcf8574: pcf8574_3
       number: 4
@@ -1258,14 +1294,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch61Light}
+            light.is_off: ${fl1LightSwitch61Light}
           then:
             light.turn_on:
-              id: ${lightSwitch61Light}
+              id: ${fl1LightSwitch61Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch61Light}
+              id: ${fl1LightSwitch61Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -1276,7 +1312,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch61Light}
+          id: ${fl1LightSwitch61Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -1285,23 +1321,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch61Light}
-              - binary_sensor.is_on: ${lightSwitch61Light}_dimMin
+              - light.is_off: ${fl1LightSwitch61Light}
+              - binary_sensor.is_on: ${fl1LightSwitch61Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch61
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch61
+                  - binary_sensor.is_off: ${fl1LightSwitch61Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch61Light}
+                      light.is_off: ${fl1LightSwitch61Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch61Light}
+                        id: ${fl1LightSwitch61Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch61Light}
+                    id: ${fl1LightSwitch61Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -1310,20 +1348,20 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch61
-                  - light.is_on: ${lightSwitch61Light}
-                  - binary_sensor.is_off: ${lightSwitch61Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch61
+                  - light.is_on: ${fl1LightSwitch61Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch61Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch61Light}
+                  id: ${fl1LightSwitch61Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# kitchenSwitch_key2 is a meta key and usable only via Home Assistant
+#62 fl1KitchenSwitch_key2 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "kitchenSwitch_key2"
-    id: lightSwitch62
+    name: "fl1KitchenSwitch_key2"
+    id: fl1LightSwitch62
     pin:
       pcf8574: pcf8574_3
       number: 5
@@ -1332,10 +1370,10 @@ binary_sensor:
     filters:
       - delayed_on_off: 30ms
 
-# kitchenSwitch_key3 is controlling livingroomTableLight
+#63 fl1KitchenSwitch_key3 is controlling fl1LivingroomTableLight
   - platform: gpio
-    name: "kitchenSwitch_key3"
-    id: lightSwitch63
+    name: "fl1KitchenSwitch_key3"
+    id: fl1LightSwitch63
     pin:
       pcf8574: pcf8574_3
       number: 6
@@ -1348,14 +1386,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch63Light}
+            light.is_off: ${fl1LightSwitch63Light}
           then:
             light.turn_on:
-              id: ${lightSwitch63Light}
+              id: ${fl1LightSwitch63Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch63Light}
+              id: ${fl1LightSwitch63Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -1366,7 +1404,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch63Light}
+          id: ${fl1LightSwitch63Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -1375,23 +1413,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch63Light}
-              - binary_sensor.is_on: ${lightSwitch63Light}_dimMin
+              - light.is_off: ${fl1LightSwitch63Light}
+              - binary_sensor.is_on: ${fl1LightSwitch63Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch63
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch63
+                  - binary_sensor.is_off: ${fl1LightSwitch63Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch63Light}
+                      light.is_off: ${fl1LightSwitch63Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch63Light}
+                        id: ${fl1LightSwitch63Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch63Light}
+                    id: ${fl1LightSwitch63Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -1400,20 +1440,20 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch63
-                  - light.is_on: ${lightSwitch63Light}
-                  - binary_sensor.is_off: ${lightSwitch63Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch63
+                  - light.is_on: ${fl1LightSwitch63Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch63Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch63Light}
+                  id: ${fl1LightSwitch63Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# kitchenSwitch_key4 is a meta key and usable only via Home Assistant
+#64 fl1KitchenSwitch_key4 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "kitchenSwitch_key4"
-    id: lightSwitch64
+    name: "fl1KitchenSwitch_key4"
+    id: fl1LightSwitch64
     pin:
       pcf8574: pcf8574_3
       number: 7
@@ -1423,15 +1463,20 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-# stairsSwitch_key1 controlling stairsCeilingLight
+#71 fl1StairsSwitch_key1 controlling fl1StairsCeilingLight
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch71Light}_dimMin
-    lambda: if (float(id(${lightSwitch71Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    id: ${fl1LightSwitch71Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch71Light}).remote_values.get_brightness()) < .55) return true; else return false;
+
+  # set the maximum dimming value to 1
+  - platform: template
+    id: ${fl1LightSwitch71Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch71Light}).remote_values.get_brightness()) >= 1) return true; else return false;
 
   - platform: gpio
-    name: "stairsSwitch_key1"
-    id: lightSwitch71
+    name: "fl1StairsSwitch_key1"
+    id: fl1LightSwitch71
     pin:
       pcf8574: pcf8574_4
       number: 0
@@ -1444,14 +1489,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch71Light}
+            light.is_off: ${fl1LightSwitch71Light}
           then:
             light.turn_on:
-              id: ${lightSwitch71Light}
+              id: ${fl1LightSwitch71Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch71Light}
+              id: ${fl1LightSwitch71Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -1462,7 +1507,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch71Light}
+          id: ${fl1LightSwitch71Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -1471,23 +1516,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch71Light}
-              - binary_sensor.is_on: ${lightSwitch71Light}_dimMin
+              - light.is_off: ${fl1LightSwitch71Light}
+              - binary_sensor.is_on: ${fl1LightSwitch71Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch71
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch71
+                  - binary_sensor.is_off: ${fl1LightSwitch71Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch71Light}
+                      light.is_off: ${fl1LightSwitch71Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch71Light}
+                        id: ${fl1LightSwitch71Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch71Light}
+                    id: ${fl1LightSwitch71Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -1496,20 +1543,20 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch71
-                  - light.is_on: ${lightSwitch71Light}
-                  - binary_sensor.is_off: ${lightSwitch71Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch71
+                  - light.is_on: ${fl1LightSwitch71Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch71Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch71Light}
+                  id: ${fl1LightSwitch71Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# stairsSwitch_key2 is a meta key and usable only via Home Assistant
+#72 fl1StairsSwitch_key2 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "stairsSwitch_key2"
-    id: lightSwitch72
+    name: "fl1StairsSwitch_key2"
+    id: fl1LightSwitch72
     pin:
       pcf8574: pcf8574_4
       number: 1
@@ -1518,10 +1565,10 @@ binary_sensor:
     filters:
       - delayed_on_off: 30ms
 
-# stairsSwitch_key3 is a meta key and usable only via Home Assistant
+#73 fl1StairsSwitch_key3 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "stairsSwitch_key3"
-    id: lightSwitch73
+    name: "fl1StairsSwitch_key3"
+    id: fl1LightSwitch73
     pin:
       pcf8574: pcf8574_4
       number: 2
@@ -1530,10 +1577,10 @@ binary_sensor:
     filters:
       - delayed_on_off: 30ms
 
-# stairsSwitch_key4 is a meta key and usable only via Home Assistant
+#74 fl1StairsSwitch_key4 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "stairsSwitch_key4"
-    id: lightSwitch74
+    name: "fl1StairsSwitch_key4"
+    id: fl1LightSwitch74
     pin:
       pcf8574: pcf8574_4
       number: 3
@@ -1543,15 +1590,20 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-# studySwitch_key1 controlling studyCeilingLight
+#81 fl1StudySwitch_key1 controlling fl1StudyCeilingLight
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch81Light}_dimMin
-    lambda: if (float(id(${lightSwitch81Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    id: ${fl1LightSwitch81Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch81Light}).remote_values.get_brightness()) < .55) return true; else return false;
+
+  # set the maximum dimming value to 1
+  - platform: template
+    id: ${fl1LightSwitch81Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch81Light}).remote_values.get_brightness()) >= 1) return true; else return false;
 
   - platform: gpio
-    name: "studySwitch_key1"
-    id: lightSwitch81
+    name: "fl1StudySwitch_key1"
+    id: fl1LightSwitch81
     pin:
       pcf8574: pcf8574_4
       number: 4
@@ -1564,14 +1616,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch81Light}
+            light.is_off: ${fl1LightSwitch81Light}
           then:
             light.turn_on:
-              id: ${lightSwitch81Light}
+              id: ${fl1LightSwitch81Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch81Light}
+              id: ${fl1LightSwitch81Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -1582,7 +1634,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch81Light}
+          id: ${fl1LightSwitch81Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -1591,23 +1643,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch81Light}
-              - binary_sensor.is_on: ${lightSwitch81Light}_dimMin
+              - light.is_off: ${fl1LightSwitch81Light}
+              - binary_sensor.is_on: ${fl1LightSwitch81Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch81
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch81
+                  - binary_sensor.is_off: ${fl1LightSwitch81Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch81Light}
+                      light.is_off: ${fl1LightSwitch81Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch81Light}
+                        id: ${fl1LightSwitch81Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch81Light}
+                    id: ${fl1LightSwitch81Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -1616,25 +1670,30 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch81
-                  - light.is_on: ${lightSwitch81Light}
-                  - binary_sensor.is_off: ${lightSwitch81Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch81
+                  - light.is_on: ${fl1LightSwitch81Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch81Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch81Light}
+                  id: ${fl1LightSwitch81Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# studySwitch_key2 controlling studyWallLight
+#82 fl1StudySwitch_key2 controlling fl1StudyWallLight
   # set the minimum dimming value to 0.55
   - platform: template
-    id: ${lightSwitch82Light}_dimMin
-    lambda: if (float(id(${lightSwitch82Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    id: ${fl1LightSwitch82Light}_dimMin
+    lambda: if (float(id(${fl1LightSwitch82Light}).remote_values.get_brightness()) < .55) return true; else return false;
+
+  # set the maximum dimming value to 1
+  - platform: template
+    id: ${fl1LightSwitch82Light}_dimMax
+    lambda: if (float(id(${fl1LightSwitch82Light}).remote_values.get_brightness()) >= 1) return true; else return false;
 
   - platform: gpio
-    name: "studySwitch_key2"
-    id: lightSwitch82
+    name: "fl1StudySwitch_key2"
+    id: fl1LightSwitch82
     pin:
       pcf8574: pcf8574_4
       number: 5
@@ -1647,14 +1706,14 @@ binary_sensor:
       then:
       - if:
           condition:
-            light.is_off: ${lightSwitch82Light}
+            light.is_off: ${fl1LightSwitch82Light}
           then:
             light.turn_on:
-              id: ${lightSwitch82Light}
+              id: ${fl1LightSwitch82Light}
               transition_length: 1s
           else:
             light.turn_off:
-              id: ${lightSwitch82Light}
+              id: ${fl1LightSwitch82Light}
               transition_length: 3s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
@@ -1665,7 +1724,7 @@ binary_sensor:
         - OFF for at least 0.1s
       then:
         light.turn_on: 
-          id: ${lightSwitch82Light}
+          id: ${fl1LightSwitch82Light}
           brightness: 100%
           transition_length: 0s
   # on press, dimm up or down   
@@ -1674,23 +1733,25 @@ binary_sensor:
       - if:
           condition:
             or:
-              - light.is_off: ${lightSwitch82Light}
-              - binary_sensor.is_on: ${lightSwitch82Light}_dimMin
+              - light.is_off: ${fl1LightSwitch82Light}
+              - binary_sensor.is_on: ${fl1LightSwitch82Light}_dimMin
           then:
           - delay: 0.5s         
           - while:
               condition:
-                binary_sensor.is_on: lightSwitch82
+                and:
+                  - binary_sensor.is_on: fl1LightSwitch82
+                  - binary_sensor.is_off: ${fl1LightSwitch82Light}_dimMax
               then:
                 - if:
                     condition:
-                      light.is_off: ${lightSwitch82Light}
+                      light.is_off: ${fl1LightSwitch82Light}
                     then:
                     - light.turn_on:
-                        id: ${lightSwitch82Light}
+                        id: ${fl1LightSwitch82Light}
                         brightness: 40%  
                 - light.dim_relative:
-                    id: ${lightSwitch82Light}
+                    id: ${fl1LightSwitch82Light}
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -1699,20 +1760,20 @@ binary_sensor:
           - while:
               condition:
                 and:
-                  - binary_sensor.is_on: lightSwitch82
-                  - light.is_on: ${lightSwitch82Light}
-                  - binary_sensor.is_off: ${lightSwitch82Light}_dimMin
+                  - binary_sensor.is_on: fl1LightSwitch82
+                  - light.is_on: ${fl1LightSwitch82Light}
+                  - binary_sensor.is_off: ${fl1LightSwitch82Light}_dimMin
               then:
               - light.dim_relative:
-                  id: ${lightSwitch82Light}
+                  id: ${fl1LightSwitch82Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
 
-# studySwitch_key3 controlling exteriorCeilingLight
+#83 fl1StudySwitch_key3 controlling fl1ExteriorCeilingLight
   - platform: gpio
-    name: "studySwitch_key3"
-    id: lightSwitch83
+    name: "fl1StudySwitch_key3"
+    id: fl1LightSwitch83
     pin:
       pcf8574: pcf8574_4
       number: 6
@@ -1724,13 +1785,13 @@ binary_sensor:
     on_press:
       then:
         light.toggle:
-          id: ${lightSwitch83Light}
+          id: ${fl1LightSwitch83Light}
           transition_length: 0s
 
-# studySwitch_key4 is a meta key and usable only via Home Assistant
+#84 fl1StudySwitch_key4 is a meta key and usable only via Home Assistant
   - platform: gpio
-    name: "studySwitch_key4"
-    id: lightSwitch84
+    name: "fl1StudySwitch_key4"
+    id: fl1LightSwitch84
     pin:
       pcf8574: pcf8574_4
       number: 7

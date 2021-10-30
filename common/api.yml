@@ -1,4 +1,5 @@
 # Enable Home Assistant API
 api:
   password: !secret apiPwd
+  reboot_timeout: 60min
   
