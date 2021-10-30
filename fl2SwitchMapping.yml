@@ -1,39 +1,39 @@
-fl2LightSwitch11Light: fl2hallwayCeilingLight
-fl2LightSwitch12Light: fl2hallwayCeilingLight
+fl2LightSwitch11Light: fl2HallwayCeilingLight
+fl2LightSwitch12Light: fl2HallwayCeilingLight
 fl2LightSwitch13Light: meta
 fl2LightSwitch14Light: meta
 
-fl2LightSwitch21Light: fl2bathroomCeilingLight
-fl2LightSwitch22Light: fl2bathroomShowerLight
-fl2LightSwitch23Light: fl2bathroomBathtubLight
-fl2LightSwitch24Light: fl2bathroomFloorHeating
+fl2LightSwitch21Light: fl2BathroomCeilingLight
+fl2LightSwitch22Light: fl2BathroomShowerLight
+fl2LightSwitch23Light: fl2BathroomBathtubLight
+fl2LightSwitch24Light: fl2BathroomFloorHeating
 
-fl2LightSwitch31Light: bedroom1CeilingLight
-fl2LightSwitch32Light: bedroom1WallLight
+fl2LightSwitch31Light: fl2Bedroom1CeilingLight
+fl2LightSwitch32Light: fl2Bedroom1WallLight
 fl2LightSwitch33Light: meta
 fl2LightSwitch34Light: meta
 
-fl2LightSwitch41Light: bedroom2CeilingLight
-fl2LightSwitch42Light: bedroom2WallLight
+fl2LightSwitch41Light: fl2Bedroom2CeilingLight
+fl2LightSwitch42Light: fl2Bedroom2WallLight
 fl2LightSwitch43Light: meta
 fl2LightSwitch44Light: meta
 
-fl2LightSwitch51Light: bedroom0CeilingLight1
-fl2LightSwitch52Light: bedroom0CeilingLight2
-fl2LightSwitch53Light: bedroom0WallLight
+fl2LightSwitch51Light: fl2Bedroom0CeilingLight1
+fl2LightSwitch52Light: fl2Bedroom0CeilingLight2
+fl2LightSwitch53Light: fl2Bedroom0WallLight
 fl2LightSwitch54Light: meta
 
-fl2LightSwitch61Light: bedroom0CeilingLight2
-fl2LightSwitch62Light: bedroom0WallLight
+fl2LightSwitch61Light: fl2Bedroom0CeilingLight2
+fl2LightSwitch62Light: fl2Bedroom0WallLight
 fl2LightSwitch63Light: meta
 fl2LightSwitch64Light: meta
 
-fl2LightSwitch71Light: bedroom0CeilingLight2
-fl2LightSwitch72Light: bedroom0WallLight
-fl2LightSwitch73Light: bedroom0CeilingLight1
-fl2LightSwitch74Light: bedroom0BedLight1
+fl2LightSwitch71Light: fl2Bedroom0CeilingLight2
+fl2LightSwitch72Light: fl2Bedroom0WallLight
+fl2LightSwitch73Light: fl2Bedroom0CeilingLight1
+fl2LightSwitch74Light: fl2Bedroom0BedLight1
 
-fl2LightSwitch81Light: bedroom0BedLight2
-fl2LightSwitch82Light: bedroom0CeilingLight1
-fl2LightSwitch83Light: bedroom0WallLight
-fl2LightSwitch84Light: bedroom0CeilingLight2
+fl2LightSwitch81Light: fl2Bedroom0BedLight2
+fl2LightSwitch82Light: fl2Bedroom0CeilingLight1
+fl2LightSwitch83Light: fl2Bedroom0WallLight
+fl2LightSwitch84Light: fl2Bedroom0CeilingLight2

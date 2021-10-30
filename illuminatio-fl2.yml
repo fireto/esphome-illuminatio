@@ -148,73 +148,73 @@ output:
 # https://esphome.io/components/light/index.html
 light:  
   - platform: monochromatic
-    name: "fl2hallwayCeilingLight"
-    id: fl2hallwayCeilingLight
+    name: "fl2HallwayCeilingLight"
+    id: fl2HallwayCeilingLight
     output: pca1_0
 
   - platform: monochromatic
-    name: "fl2bathroomCeilingLight"
-    id: fl2bathroomCeilingLight
+    name: "fl2BathroomCeilingLight"
+    id: fl2BathroomCeilingLight
     output: pca1_1
 
   - platform: monochromatic
-    name: "fl2bathroomShowerLight"
-    id: fl2bathroomShowerLight
+    name: "fl2BathroomShowerLight"
+    id: fl2BathroomShowerLight
     output: pca1_2
 
   - platform: monochromatic
-    name: "fl2bathroomBathtubLight"
-    id: fl2bathroomBathtubLight
+    name: "fl2BathroomBathtubLight"
+    id: fl2BathroomBathtubLight
     output: pca1_3
     
   - platform: monochromatic
-    name: "fl2bathroomFloorHeating"
-    id: fl2bathroomFloorHeating
+    name: "fl2BathroomFloorHeating"
+    id: fl2BathroomFloorHeating
     output: pca1_4
         
   - platform: monochromatic
-    name: "bedroom1CeilingLight"
-    id: bedroom1CeilingLight
+    name: "fl2Bedroom1CeilingLight"
+    id: fl2Bedroom1CeilingLight
     output: pca1_5
         
   - platform: monochromatic
-    name: "bedroom1WallLight"
-    id: bedroom1WallLight
+    name: "fl2Bedroom1WallLight"
+    id: fl2Bedroom1WallLight
     output: pca1_6
         
   - platform: monochromatic
-    name: "bedroom2CeilingLight"
-    id: bedroom2CeilingLight
+    name: "fl2Bedroom2CeilingLight"
+    id: fl2Bedroom2CeilingLight
     output: pca1_7
     
   - platform: monochromatic
-    name: "bedroom2WallLight"
-    id: bedroom2WallLight
+    name: "fl2Bedroom2WallLight"
+    id: fl2Bedroom2WallLight
     output: pca1_8
         
   - platform: monochromatic
-    name: "bedroom0CeilingLight1"
-    id: bedroom0CeilingLight1
+    name: "fl2Bedroom0CeilingLight1"
+    id: fl2Bedroom0CeilingLight1
     output: pca1_9
         
   - platform: monochromatic
-    name: "bedroom0CeilingLight2"
-    id: bedroom0CeilingLight2
+    name: "fl2Bedroom0CeilingLight2"
+    id: fl2Bedroom0CeilingLight2
     output: pca1_10
 
   - platform: monochromatic
-    name: "bedroom0WallLight"
-    id: bedroom0WallLight
+    name: "fl2Bedroom0WallLight"
+    id: fl2Bedroom0WallLight
     output: pca1_11
         
   - platform: monochromatic
-    name: "bedroom0BedLight1"
-    id: bedroom0BedLight1
+    name: "fl2Bedroom0BedLight1"
+    id: fl2Bedroom0BedLight1
     output: pca1_12
         
   - platform: monochromatic
-    name: "bedroom0BedLight2"
-    id: bedroom0BedLight2
+    name: "fl2Bedroom0BedLight2"
+    id: fl2Bedroom0BedLight2
     output: pca1_13
     
   #   output: pca1_14 not connected on the PCB
@@ -229,7 +229,7 @@ light:
 # for detailed decription check switch_mappings.ods
 binary_sensor:
 
-#11 fl2HallwaySwitch_key1 controlling fl2hallwayCeilingLight
+#11 fl2HallwaySwitch_key1 controlling fl2HallwayCeilingLight
   # set the minimum dimming value to 0.55
   - platform: template
     id: ${fl2LightSwitch11Light}_dimMin
@@ -319,7 +319,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#12 fl2HallwaySwitch_key2 controlling fl2hallwayCeilingLight
+#12 fl2HallwaySwitch_key2 controlling fl2HallwayCeilingLight
 
   - platform: gpio
     name: "fl2HallwaySwitch_key2"
@@ -425,7 +425,7 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-#21 fl2BathroomSwitch_key1 controlling fl2bathroomCeilingLight
+#21 fl2BathroomSwitch_key1 controlling fl2BathroomCeilingLight
   # set the minimum dimming value to 0.55
   - platform: template
     id: ${fl2LightSwitch21Light}_dimMin
@@ -515,7 +515,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#22 fl2BathroomSwitch_key2 controlling fl2bathroomShowerLight
+#22 fl2BathroomSwitch_key2 controlling fl2BathroomShowerLight
   # set the minimum dimming value to 0.55
   - platform: template
     id: ${fl2LightSwitch22Light}_dimMin
@@ -605,7 +605,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#23 fl2BathroomSwitch_key3 controlling fl2bathroomBathtubLight
+#23 fl2BathroomSwitch_key3 controlling fl2BathroomBathtubLight
   # set the minimum dimming value to 0.55
   - platform: template
     id: ${fl2LightSwitch23Light}_dimMin
@@ -695,7 +695,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#24 fl2BathroomSwitch_key4 controlling fl2bathroomFloorHeating
+#24 fl2BathroomSwitch_key4 controlling fl2BathroomFloorHeating
   - platform: gpio
     name: "fl2BathroomSwitch_key4"
     id: fl2LightSwitch24
@@ -714,7 +714,7 @@ binary_sensor:
           transition_length: 0s
 
 
-#31 fl2Bedroom1Switch_key1 controlling bedroom1CeilingLight
+#31 fl2Bedroom1Switch_key1 controlling fl2Bedroom1CeilingLight
 
   # set the minimum dimming value to 0.55
   - platform: template
@@ -805,7 +805,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#32 fl2Bedroom1Switch_key2 controlling bedroom1WallLight
+#32 fl2Bedroom1Switch_key2 controlling fl2Bedroom1WallLight
 
   # set the minimum dimming value to 0.55
   - platform: template
@@ -921,7 +921,7 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-#41 fl2Bedroom2Switch_key1 controlling bedroom2CeilingLight
+#41 fl2Bedroom2Switch_key1 controlling fl2Bedroom2CeilingLight
 
   # set the minimum dimming value to 0.55
   - platform: template
@@ -1012,7 +1012,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
   
-#42 fl2Bedroom2Switch_key2 controlling bedroom2WallLight
+#42 fl2Bedroom2Switch_key2 controlling fl2Bedroom2WallLight
 
   # set the minimum dimming value to 0.55
   - platform: template
@@ -1128,7 +1128,7 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-#51 fl2Bedroom0Switch1_key1 controlling bedroom0CeilingLight1
+#51 fl2Bedroom0Switch1_key1 controlling fl2Bedroom0CeilingLight1
 
   # set the minimum dimming value to 0.55
   - platform: template
@@ -1219,7 +1219,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#52 fl2Bedroom0Switch1_key2 controlling bedroom0CeilingLight2
+#52 fl2Bedroom0Switch1_key2 controlling fl2Bedroom0CeilingLight2
 
   # set the minimum dimming value to 0.55
   - platform: template
@@ -1310,7 +1310,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#53 fl2Bedroom0Switch1_key3 controlling bedroom0WallLight
+#53 fl2Bedroom0Switch1_key3 controlling fl2Bedroom0WallLight
 
   # set the minimum dimming value to 0.55
   - platform: template
@@ -1414,7 +1414,7 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-#61 fl2Bedroom0Switch2_key1 controlling bedroom0CeilingLight2
+#61 fl2Bedroom0Switch2_key1 controlling fl2Bedroom0CeilingLight2
 
   - platform: gpio
     name: "fl2Bedroom0Switch2_key1"
@@ -1495,7 +1495,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#62 fl2Bedroom0Switch2_key2 controlling bedroom0WallLight
+#62 fl2Bedroom0Switch2_key2 controlling fl2Bedroom0WallLight
 
   - platform: gpio
     name: "fl2Bedroom0Switch2_key2"
@@ -1601,7 +1601,7 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-#71 fl2Bedroom0Switch3_key1 controlling bedroom0CeilingLight2
+#71 fl2Bedroom0Switch3_key1 controlling fl2Bedroom0CeilingLight2
 
   - platform: gpio
     name: "fl2Bedroom0Switch3_key1"
@@ -1682,7 +1682,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#72 fl2Bedroom0Switch3_key2 controlling bedroom0WallLight
+#72 fl2Bedroom0Switch3_key2 controlling fl2Bedroom0WallLight
 
   - platform: gpio
     name: "fl2Bedroom0Switch3_key2"
@@ -1763,7 +1763,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#73 fl2Bedroom0Switch3_key3 controlling bedroom0CeilingLight1
+#73 fl2Bedroom0Switch3_key3 controlling fl2Bedroom0CeilingLight1
 
   - platform: gpio
     name: "fl2Bedroom0Switch3_key3"
@@ -1844,7 +1844,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#74 fl2Bedroom0Switch3_key4 controlling bedroom0BedLight1
+#74 fl2Bedroom0Switch3_key4 controlling fl2Bedroom0BedLight1
 
   # set the minimum dimming value to 0.55
   - platform: template
@@ -1936,7 +1936,7 @@ binary_sensor:
               - delay: 0.1s
 
 
-#81 fl2Bedroom0Switch4_key1 controlling bedroom0BedLight2
+#81 fl2Bedroom0Switch4_key1 controlling fl2Bedroom0BedLight2
 
   # set the minimum dimming value to 0.55
   - platform: template
@@ -2027,7 +2027,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#82 fl2Bedroom0Switch4_key2 controlling bedroom0CeilingLight1
+#82 fl2Bedroom0Switch4_key2 controlling fl2Bedroom0CeilingLight1
 
   - platform: gpio
     name: "fl2Bedroom0Switch4_key2"
@@ -2108,7 +2108,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#83 fl2Bedroom0Switch4_key3 controlling bedroom0WallLight
+#83 fl2Bedroom0Switch4_key3 controlling fl2Bedroom0WallLight
 
   - platform: gpio
     name: "fl2Bedroom0Switch4_key3"
@@ -2189,7 +2189,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#84 fl2Bedroom0Switch4_key4 controlling bedroom0CeilingLight2
+#84 fl2Bedroom0Switch4_key4 controlling fl2Bedroom0CeilingLight2
 
   - platform: gpio
     name: "fl2Bedroom0Switch4_key4"
