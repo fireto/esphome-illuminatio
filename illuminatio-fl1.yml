@@ -13,7 +13,7 @@ esphome:
 packages:
   # wifi: !include common/wifi.yml
   ethernet: !include common/ethernet.yml
-  api: !include common/api.yml
+  # api: !include common/api.yml
   ota: !include common/ota.yml
   mqtt: !include common/mqtt.yml
   logger: !include common/logger.yml
@@ -71,8 +71,37 @@ sensor:
     pressure:
       name: "$upperDevicename enclosure Pressure"
     update_interval: 300s
+    
+  - platform: uptime
+    name: Uptime Sensor
+    id: uptime_sensor
+    update_interval: 60s
+    internal: true
+    on_raw_value:
+      then:
+        - text_sensor.template.publish:
+            id: uptime_human
+            state: !lambda |-
+              int seconds = round(id(uptime_sensor).raw_state);
+              int days = seconds / (24 * 3600);
+              seconds = seconds % (24 * 3600);
+              int hours = seconds / 3600;
+              seconds = seconds % 3600;
+              int minutes = seconds /  60;
+              seconds = seconds % 60;
+              return (
+                (days ? String(days) + "d " : "") +
+                (hours ? String(hours) + "h " : "") +
+                (minutes ? String(minutes) + "m " : "") +
+                (String(seconds) + "s")
+              ).c_str();
 
-
+text_sensor:
+  - platform: template
+    name: $upperDevicename Uptime Human Readable
+    id: uptime_human
+    icon: mdi:clock-start
+              
 # load module for PCA9685 16-Channel 12-bit PWM/Servo Driver I2C
 # datasheet https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf
 pca9685:
@@ -85,11 +114,17 @@ output:
     id: pca1_0
     channel: 0
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_1
     channel: 1
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_2
@@ -100,6 +135,9 @@ output:
     id: pca1_3
     channel: 3
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_4
@@ -110,46 +148,73 @@ output:
     id: pca1_5
     channel: 5
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_6
     channel: 6
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_7
     channel: 7
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_8
     channel: 8
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_9
     channel: 9
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_10
     channel: 10
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_11
     channel: 11
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_12
     channel: 12
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   - platform: pca9685
     id: pca1_13
     channel: 13
     inverted: True
+    min_power: 0.3
+    max_power: 0.9
+    zero_means_zero: True
 
   #   output: pca1_14 not connected on the PCB
   # - platform: pca9685
@@ -186,23 +251,23 @@ light:
     output: pca1_3
     
   - platform: monochromatic
-    name: "fl1BathroomShowerLight"
-    id: fl1BathroomShowerLight
+    name: "fl1BathroomFloorHeating"
+    id: fl1BathroomFloorHeating
     output: pca1_4
         
   - platform: monochromatic
-    name: "fl1BathroomFloorHeating"
-    id: fl1BathroomFloorHeating
+    name: "fl1LivingroomCeilingLightEast"
+    id: fl1LivingroomCeilingLightEast
     output: pca1_5
         
   - platform: monochromatic
-    name: "fl1UnderStairLight"
-    id: fl1UnderStairLight
+    name: "fl1LivingroomCeilingLightCenter"
+    id: fl1LivingroomCeilingLightCenter
     output: pca1_6
         
   - platform: monochromatic
-    name: "fl1LivingroomCeilingLight"
-    id: fl1LivingroomCeilingLight
+    name: "fl1LivingroomCeilingLightWest"
+    id: fl1LivingroomCeilingLightWest
     output: pca1_7
     
   - platform: monochromatic
@@ -249,10 +314,11 @@ binary_sensor:
 
 #11 fl1HallwaySwitch_key1 controlling fl1HallwayCeilingLight
  
-  # set the minimum dimming value to 0.55
+  # set the minimum dimming value to 0.05
   - platform: template
     id: ${fl1LightSwitch11Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch11Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    lambda: if (float(id(${fl1LightSwitch11Light}).remote_values.get_brightness()) < .05) return true; else return false;
+    # lambda: if (float(id(${fl1LightSwitch11Light}).remote_values.get_brightness()) < .05) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
@@ -278,11 +344,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch11Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch11Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -317,7 +383,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch11Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch11Light}
                     relative_brightness: 5%
@@ -340,10 +406,10 @@ binary_sensor:
 
 #12 fl1HallwaySwitch_key2 controlling fl1HallwayWallLight
   
-  # set the minimum dimming value to 0.55
+  # set the minimum dimming value to 0.05
   - platform: template
     id: ${fl1LightSwitch12Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch12Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    lambda: if (float(id(${fl1LightSwitch12Light}).remote_values.get_brightness()) < .05) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
@@ -369,11 +435,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch12Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch12Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -408,7 +474,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch12Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch12Light}
                     relative_brightness: 5%
@@ -461,10 +527,10 @@ binary_sensor:
 
 
 #21 fl1BathroomSwitch_key1 controlling fl1BathroomCeilingLight
-  # set the minimum dimming value to 0.55
+  # set the minimum dimming value to 0.05
   - platform: template
     id: ${fl1LightSwitch21Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch21Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    lambda: if (float(id(${fl1LightSwitch21Light}).remote_values.get_brightness()) < .05) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
@@ -490,11 +556,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch21Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch21Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turno on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -529,7 +595,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch21Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch21Light}
                     relative_brightness: 5%
@@ -550,17 +616,7 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#22 fl1BathroomSwitch_key2 controlling fl1BathroomShowerLight
-  # set the minimum dimming value to 0.55
-  - platform: template
-    id: ${fl1LightSwitch22Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch22Light}).remote_values.get_brightness()) < .55) return true; else return false;    
-
-  # set the maximum dimming value to 1
-  - platform: template
-    id: ${fl1LightSwitch22Light}_dimMax
-    lambda: if (float(id(${fl1LightSwitch22Light}).remote_values.get_brightness()) >= 1) return true; else return false;
-
+#22 fl1BathroomSwitch_key2 is a meta key and usable only via Home Assistant
   - platform: gpio
     name: "fl1BathroomSwitch_key2"
     id: fl1LightSwitch22
@@ -571,76 +627,8 @@ binary_sensor:
       inverted: True
     filters:
       - delayed_on_off: 30ms
-  # on single click, toggle light
-    on_click:
-      then:
-      - if:
-          condition:
-            light.is_off: ${fl1LightSwitch22Light}
-          then:
-            light.turn_on:
-              id: ${fl1LightSwitch22Light}
-              transition_length: 1s
-          else:
-            light.turn_off:
-              id: ${fl1LightSwitch22Light}
-              transition_length: 3s
-  # on double click, turno on ligh with brighness 100%
-    on_multi_click:
-    - timing:
-        - ON for at most 0.5s
-        - OFF for at most 1s
-        - ON for at most 0.5s
-        - OFF for at least 0.1s
-      then:
-        light.turn_on: 
-          id: ${fl1LightSwitch22Light}
-          brightness: 100%
-          transition_length: 0s
-  # on press, dimm up or down   
-    on_press:
-      then:
-      - if:
-          condition:
-            or:
-              - light.is_off: ${fl1LightSwitch22Light}
-              - binary_sensor.is_on: ${fl1LightSwitch22Light}_dimMin
-          then:
-          - delay: 0.5s         
-          - while:
-              condition:
-                and:
-                  - binary_sensor.is_on: fl1LightSwitch22
-                  - binary_sensor.is_off: ${fl1LightSwitch22Light}_dimMax
-              then:
-                - if:
-                    condition:
-                      light.is_off: ${fl1LightSwitch22Light}
-                    then:
-                    - light.turn_on:
-                        id: ${fl1LightSwitch22Light}
-                        brightness: 40%  
-                - light.dim_relative:
-                    id: ${fl1LightSwitch22Light}
-                    relative_brightness: 5%
-                    transition_length: 0.1s
-                - delay: 0.1s
-          else:
-          - delay: 0.5s
-          - while:
-              condition:
-                and:
-                  - binary_sensor.is_on: fl1LightSwitch22
-                  - light.is_on: ${fl1LightSwitch22Light}
-                  - binary_sensor.is_off: ${fl1LightSwitch22Light}_dimMin
-              then:
-              - light.dim_relative:
-                  id: ${fl1LightSwitch22Light}
-                  relative_brightness: -5%
-                  transition_length: 0.1s
-              - delay: 0.1s
 
-#23 fl1BathroomSwitch_key3 controlling fl1BathroomFloorHeating
+#23 fl1BathroomSwitch_key3 is a meta key and usable only via Home Assistant
   - platform: gpio
     name: "fl1BathroomSwitch_key3"
     id: fl1LightSwitch23
@@ -651,14 +639,8 @@ binary_sensor:
       inverted: True
     filters:
       - delayed_on_off: 30ms
-  # on press, toggle light
-    on_press:
-      then:
-        light.toggle: 
-          id: ${fl1LightSwitch23Light}
-          transition_length: 0s
 
-#24 fl1BathroomSwitch_key4 is a meta key and usable only via Home Assistant
+#24 fl1BathroomSwitch_key4 controlling fl1BathroomFloorHeating
   - platform: gpio
     name: "fl1BathroomSwitch_key4"
     id: fl1LightSwitch24
@@ -669,6 +651,12 @@ binary_sensor:
       inverted: True
     filters:
       - delayed_on_off: 30ms
+  # on press, toggle light
+    on_press:
+      then:
+        light.toggle: 
+          id: ${fl1LightSwitch24Light}
+          transition_length: 0s
 
 
 #31 fl1UnderStairSwitch_key1 controlling fl1UnderStairLight
@@ -682,12 +670,6 @@ binary_sensor:
       inverted: True
     filters:
       - delayed_on_off: 30ms
-  # on press, toggle light
-    on_press:
-      then:
-        light.toggle:
-          id: ${fl1LightSwitch31Light}
-          transition_length: 0s
 
 #32 fl1UnderStairSwitch_key2 is a meta key and usable only via Home Assistant
   - platform: gpio
@@ -726,11 +708,11 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 
-#41 fl1LivingroomSwitch_key1 controlling fl1LivingroomCeilingLight
-  # set the minimum dimming value to 0.55
+#41 fl1LivingroomSwitch_key1 controlling fl1LivingroomCeilingLights
+  # set the minimum dimming value to 0.05
   - platform: template
     id: ${fl1LightSwitch41Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch41Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    lambda: if (float(id(${fl1LightSwitch41Light}).remote_values.get_brightness()) < .05) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
@@ -754,13 +736,25 @@ binary_sensor:
           condition:
             light.is_off: ${fl1LightSwitch41Light}
           then:
-            light.turn_on:
-              id: ${fl1LightSwitch41Light}
-              transition_length: 1s
+            - light.turn_on:
+                id: ${fl1LightSwitch41Light}
+                transition_length: 0s
+            - light.turn_on:
+                id: fl1LivingroomCeilingLightCenter
+                transition_length: 0s
+            - light.turn_on:
+                id: fl1LivingroomCeilingLightWest
+                transition_length: 0s
           else:
-            light.turn_off:
-              id: ${fl1LightSwitch41Light}
-              transition_length: 3s
+            - light.turn_off:
+                id: ${fl1LightSwitch41Light}
+                transition_length: 0s
+            - light.turn_off:
+                id: fl1LivingroomCeilingLightCenter
+                transition_length: 0s
+            - light.turn_off:
+                id: fl1LivingroomCeilingLightWest
+                transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -769,10 +763,18 @@ binary_sensor:
         - ON for at most 0.5s
         - OFF for at least 0.1s
       then:
-        light.turn_on: 
-          id: ${fl1LightSwitch41Light}
-          brightness: 100%
-          transition_length: 0s
+        - light.turn_on: 
+            id: ${fl1LightSwitch41Light}
+            brightness: 100%
+            transition_length: 0s
+        - light.turn_on: 
+            id: fl1LivingroomCeilingLightCenter
+            brightness: 100%
+            transition_length: 0s
+        - light.turn_on: 
+            id: fl1LivingroomCeilingLightWest
+            brightness: 100%
+            transition_length: 0s
   # on press, dimm up or down   
     on_press:
       then:
@@ -795,9 +797,23 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch41Light}
-                        brightness: 40%  
+                        brightness: 5%
+                    - light.turn_on:
+                        id: fl1LivingroomCeilingLightCenter
+                        brightness: 5%
+                    - light.turn_on:
+                        id: fl1LivingroomCeilingLightWest
+                        brightness: 5%
                 - light.dim_relative:
                     id: ${fl1LightSwitch41Light}
+                    relative_brightness: 5%
+                    transition_length: 0.1s
+                - light.dim_relative:
+                    id: fl1LivingroomCeilingLightCenter
+                    relative_brightness: 5%
+                    transition_length: 0.1s
+                - light.dim_relative:
+                    id: fl1LivingroomCeilingLightWest
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -814,13 +830,21 @@ binary_sensor:
                   id: ${fl1LightSwitch41Light}
                   relative_brightness: -5%
                   transition_length: 0.1s
+              - light.dim_relative:
+                  id: fl1LivingroomCeilingLightCenter
+                  relative_brightness: -5%
+                  transition_length: 0.1s
+              - light.dim_relative:
+                  id: fl1LivingroomCeilingLightWest
+                  relative_brightness: -5%
+                  transition_length: 0.1s
               - delay: 0.1s
 
 #42 fl1LivingroomSwitch_key2 controlling fl1LivingroomWallLights
-  # set the minimum dimming value to 0.55
+  # set the minimum dimming value to 0.05
   - platform: template
     id: ${fl1LightSwitch42Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch42Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    lambda: if (float(id(${fl1LightSwitch42Light}).remote_values.get_brightness()) < .05) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
@@ -846,11 +870,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch42Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch42Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -885,7 +909,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch42Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch42Light}
                     relative_brightness: 5%
@@ -907,10 +931,10 @@ binary_sensor:
               - delay: 0.1s
 
 #43 fl1LivingroomSwitch_key3 controlling fl1LivingroomTableLights
-  # set the minimum dimming value to 0.55
+  # set the minimum dimming value to 0.05
   - platform: template
     id: ${fl1LightSwitch43Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch43Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    lambda: if (float(id(${fl1LightSwitch43Light}).remote_values.get_brightness()) < .05) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
@@ -936,11 +960,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch43Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch43Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -975,7 +999,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch43Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch43Light}
                     relative_brightness: 5%
@@ -997,10 +1021,10 @@ binary_sensor:
               - delay: 0.1s
 
 #44 fl1LivingroomSwitch_key4 controlling fl1KitchenCeilingLights
-  # set the minimum dimming value to 0.55
+  # set the minimum dimming value to 0.05
   - platform: template
     id: ${fl1LightSwitch44Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch44Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    lambda: if (float(id(${fl1LightSwitch44Light}).remote_values.get_brightness()) < .05) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
@@ -1026,11 +1050,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch44Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch44Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -1065,7 +1089,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch44Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch44Light}
                     relative_brightness: 5%
@@ -1105,13 +1129,25 @@ binary_sensor:
           condition:
             light.is_off: ${fl1LightSwitch51Light}
           then:
-            light.turn_on:
-              id: ${fl1LightSwitch51Light}
-              transition_length: 1s
+            - light.turn_on:
+                id: ${fl1LightSwitch51Light}
+                transition_length: 0s
+            - light.turn_on:
+                id: fl1LivingroomCeilingLightCenter
+                transition_length: 0s
+            - light.turn_on:
+                id: fl1LivingroomCeilingLightWest
+                transition_length: 0s
           else:
-            light.turn_off:
-              id: ${fl1LightSwitch51Light}
-              transition_length: 3s
+            - light.turn_off:
+                id: ${fl1LightSwitch51Light}
+                transition_length: 0s
+            - light.turn_off:
+                id: fl1LivingroomCeilingLightCenter
+                transition_length: 0s
+            - light.turn_off:
+                id: fl1LivingroomCeilingLightWest
+                transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -1120,10 +1156,18 @@ binary_sensor:
         - ON for at most 0.5s
         - OFF for at least 0.1s
       then:
-        light.turn_on: 
-          id: ${fl1LightSwitch51Light}
-          brightness: 100%
-          transition_length: 0s
+        - light.turn_on: 
+            id: ${fl1LightSwitch51Light}
+            brightness: 100%
+            transition_length: 0s
+        - light.turn_on: 
+            id: fl1LivingroomCeilingLightCenter
+            brightness: 100%
+            transition_length: 0s
+        - light.turn_on: 
+            id: fl1LivingroomCeilingLightWest
+            brightness: 100%
+            transition_length: 0s
   # on press, dimm up or down   
     on_press:
       then:
@@ -1146,9 +1190,23 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch51Light}
-                        brightness: 40%  
+                        brightness: 5%
+                    - light.turn_on:
+                        id: fl1LivingroomCeilingLightCenter
+                        brightness: 5%
+                    - light.turn_on:
+                        id: fl1LivingroomCeilingLightWest
+                        brightness: 5%
                 - light.dim_relative:
                     id: ${fl1LightSwitch51Light}
+                    relative_brightness: 5%
+                    transition_length: 0.1s
+                - light.dim_relative:
+                    id: fl1LivingroomCeilingLightCenter
+                    relative_brightness: 5%
+                    transition_length: 0.1s
+                - light.dim_relative:
+                    id: fl1LivingroomCeilingLightWest
                     relative_brightness: 5%
                     transition_length: 0.1s
                 - delay: 0.1s
@@ -1163,6 +1221,14 @@ binary_sensor:
               then:
               - light.dim_relative:
                   id: ${fl1LightSwitch51Light}
+                  relative_brightness: -5%
+                  transition_length: 0.1s
+              - light.dim_relative:
+                  id: fl1LivingroomCeilingLightCenter
+                  relative_brightness: -5%
+                  transition_length: 0.1s
+              - light.dim_relative:
+                  id: fl1LivingroomCeilingLightWest
                   relative_brightness: -5%
                   transition_length: 0.1s
               - delay: 0.1s
@@ -1187,11 +1253,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch52Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch52Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -1226,7 +1292,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch52Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch52Light}
                     relative_brightness: 5%
@@ -1298,11 +1364,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch61Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch61Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -1337,7 +1403,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch61Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch61Light}
                     relative_brightness: 5%
@@ -1390,11 +1456,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch63Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch63Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -1429,7 +1495,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch63Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch63Light}
                     relative_brightness: 5%
@@ -1464,10 +1530,10 @@ binary_sensor:
 
 
 #71 fl1StairsSwitch_key1 controlling fl1StairsCeilingLight
-  # set the minimum dimming value to 0.55
+  # set the minimum dimming value to 0.05
   - platform: template
     id: ${fl1LightSwitch71Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch71Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    lambda: if (float(id(${fl1LightSwitch71Light}).remote_values.get_brightness()) < .05) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
@@ -1493,11 +1559,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch71Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch71Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -1532,7 +1598,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch71Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch71Light}
                     relative_brightness: 5%
@@ -1591,10 +1657,10 @@ binary_sensor:
 
 
 #81 fl1StudySwitch_key1 controlling fl1StudyCeilingLight
-  # set the minimum dimming value to 0.55
+  # set the minimum dimming value to 0.05
   - platform: template
     id: ${fl1LightSwitch81Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch81Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    lambda: if (float(id(${fl1LightSwitch81Light}).remote_values.get_brightness()) < .05) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
@@ -1620,11 +1686,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch81Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch81Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -1659,7 +1725,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch81Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch81Light}
                     relative_brightness: 5%
@@ -1681,10 +1747,10 @@ binary_sensor:
               - delay: 0.1s
 
 #82 fl1StudySwitch_key2 controlling fl1StudyWallLight
-  # set the minimum dimming value to 0.55
+  # set the minimum dimming value to 0.05
   - platform: template
     id: ${fl1LightSwitch82Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch82Light}).remote_values.get_brightness()) < .55) return true; else return false;
+    lambda: if (float(id(${fl1LightSwitch82Light}).remote_values.get_brightness()) < .05) return true; else return false;
 
   # set the maximum dimming value to 1
   - platform: template
@@ -1710,11 +1776,11 @@ binary_sensor:
           then:
             light.turn_on:
               id: ${fl1LightSwitch82Light}
-              transition_length: 1s
+              transition_length: 0s
           else:
             light.turn_off:
               id: ${fl1LightSwitch82Light}
-              transition_length: 3s
+              transition_length: 0s
   # on double click, turn on ligh with brighness 100%
     on_multi_click:
     - timing:
@@ -1749,7 +1815,7 @@ binary_sensor:
                     then:
                     - light.turn_on:
                         id: ${fl1LightSwitch82Light}
-                        brightness: 40%  
+                        brightness: 5%  
                 - light.dim_relative:
                     id: ${fl1LightSwitch82Light}
                     relative_brightness: 5%
