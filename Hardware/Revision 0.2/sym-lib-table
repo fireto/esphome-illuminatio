@@ -1,4 +1,5 @@
 (sym_lib_table
-  (lib (name FDD8447L)(type Legacy)(uri ${KIPRJMOD}/LightControllerLibs/FDD8447L.lib)(options "")(descr ""))
-  (lib (name Connector-rj45)(type Legacy)(uri ${KIPRJMOD}/LightControllerLibs/Connector-rj45.lib)(options "")(descr ""))
+  (lib (name "FDD8447L")(type "Legacy")(uri "${KIPRJMOD}/LightControllerLibs/FDD8447L.lib")(options "")(descr ""))
+  (lib (name "Connector-rj45")(type "Legacy")(uri "${KIPRJMOD}/LightControllerLibs/Connector-rj45.lib")(options "")(descr ""))
+  (lib (name "lightController-rescue")(type "Legacy")(uri "${KIPRJMOD}/lightController-rescue.lib")(options "")(descr ""))
 )
