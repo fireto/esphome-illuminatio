@@ -4,21 +4,21 @@ fl1LightSwitch13Light: fl1ExteriorCeilingLight
 fl1LightSwitch14Light: meta
 
 fl1LightSwitch21Light: fl1BathroomCeilingLight
-fl1LightSwitch22Light: fl1BathroomShowerLight
-fl1LightSwitch23Light: fl1BathroomFloorHeating
-fl1LightSwitch24Light: meta
+fl1LightSwitch22Light: meta
+fl1LightSwitch23Light: meta
+fl1LightSwitch24Light: fl1BathroomFloorHeating
 
 fl1LightSwitch31Light: fl1UnderStairLight
 fl1LightSwitch32Light: meta
 fl1LightSwitch33Light: meta
 fl1LightSwitch34Light: meta
 
-fl1LightSwitch41Light: fl1LivingroomCeilingLight
+fl1LightSwitch41Light: fl1LivingroomCeilingLightEast
 fl1LightSwitch42Light: fl1LivingroomWallLight
 fl1LightSwitch43Light: fl1LivingroomTableLight
 fl1LightSwitch44Light: fl1KitchenCeilingLight
 
-fl1LightSwitch51Light: fl1LivingroomCeilingLight
+fl1LightSwitch51Light: fl1LivingroomCeilingLightEast
 fl1LightSwitch52Light: fl1LivingroomWallLight
 fl1LightSwitch53Light: meta
 fl1LightSwitch54Light: fl1ExteriorCeilingLight

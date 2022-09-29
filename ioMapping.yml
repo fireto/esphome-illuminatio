@@ -50,22 +50,22 @@
 #                         Floor 1                         #
 # Light name                PCA pin   DIN screw terminal  #
 ###########################################################
-  fl1hallwayCeilingLight:   pca1_0          1
-  fl1hallwayWallLight:      pca1_1          2
-  exteriorCeilingLight:     pca1_2          3
-  fl1bathroomCeilingLight:  pca1_3          4
-  fl1bathroomShowerLight:   pca1_4          5
-  fl1bathroomFloorHeating:  pca1_5          6
-  underStairLight:          pca1_6          7
-  livingroomCeilingLight:   pca1_7          8
-  livingroomWallLight:      pca1_8          9
-  livingroomTableLight:     pca1_9          10
-  kitchenCeilingLight:      pca1_10         11
-  stairsCeilingLight:       pca1_11         12
-  studyCeilingLight:        pca1_12         13
-  studyWallLight:           pca1_13         14
-  #xxxx                     pca1_14         X
-  fl1caseFan:               pca1_15         X
+  fl1hallwayCeilingLight:       pca1_0          1
+  fl1hallwayWallLight:          pca1_1          2
+  exteriorCeilingLight:         pca1_2          3
+  fl1bathroomCeilingLight:      pca1_3          4
+  fl1bathroomFloorHeating:      pca1_4          5
+  livingroomCeilingLightEast:   pca1_5          6
+  livingroomCeilingLightCenter: pca1_6          7
+  livingroomCeilingLightWest:   pca1_7          8
+  livingroomWallLight:          pca1_8          9
+  livingroomTableLight:         pca1_9          10
+  kitchenCeilingLight:          pca1_10         11
+  stairsCeilingLight:           pca1_11         12
+  studyCeilingLight:            pca1_12         13
+  studyWallLight:               pca1_13         14
+  #xxxx                         pca1_14         X
+  fl1caseFan:                   pca1_15         X
 ###########################################################
 
 ###################################
