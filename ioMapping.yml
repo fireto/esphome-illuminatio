@@ -68,24 +68,24 @@
   fl1caseFan:                   pca1_15         X
 ###########################################################
 
-###################################
-#              Floor 2            #
-# Light name              PCA pin #
-###################################
-  fl2hallwayCeilingLight:   pca1_0
-  bathroomCeilingLight:     pca1_1
-  bathroomShowerLight:      pca1_2
-  bathroomBathtubLight:     pca1_3
-  bathroomFloorHeating:     pca1_4
-  bedroom1CeilingLight:     pca1_5
-  bedroom1WallLight:        pca1_6
-  bedroom2CeilingLight:     pca1_7
-  bedroom2WallLight:        pca1_8
-  bedroom0CeilingLight1:    pca1_9
-  bedroom0CeilingLight2:    pca1_10
-  bedroom0WallLight:        pca1_11
-  bedroom0BedLight1:        pca1_12
-  bedroom0BedLight2:        pca1_13
-  #xxxx                     pca1_14
-  fl2caseFan:               pca1_15
-###################################
+###########################################################
+#                         Floor 2                         #
+# Light name                PCA pin   DIN screw terminal  #
+###########################################################
+  fl2hallwayCeilingLight:       pca1_0          1
+  fl2bathroomCeilingLight:      pca1_1          2
+  fl2bathroomShowerLight:       pca1_2          3
+  fl2bathroomBathtubLight:      pca1_3          4
+  fl2bathroomFloorHeating:      pca1_4          5
+  bedroom1CeilingLight:         pca1_5          6
+  bedroom1WallLight:            pca1_6          7
+  bedroom2CeilingLight:         pca1_7          8
+  bedroom2WallLight:            pca1_8          9
+  bedroom0CeilingLight1:        pca1_9          10
+  bedroom0CeilingLight2:        pca1_10         11
+  bedroom0WallLight:            pca1_11         12
+  bedroom0BedLight1:            pca1_12         13
+  bedroom0BedLight2:            pca1_13         14
+  #xxxx                         pca1_14         x
+  fl2caseFan:                   pca1_15         x
+###########################################################
