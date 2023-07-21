@@ -1,6 +1,6 @@
 ### Light controller main
 substitutions:
-  devicename: illuminatiofl2
+  devicename: fl2_illuminatio
   upperDevicename: Floor2 Lights Controller
   # <<: !include ioMapping.yml
   <<: !include fl2SwitchMapping.yml
@@ -13,7 +13,7 @@ esphome:
 packages:
   # wifi: !include common/wifi.yml
   ethernet: !include common/ethernet.yml
-  # api: !include common/api.yml
+  api: !include common/api.yml
   ota: !include common/ota.yml
   mqtt: !include common/mqtt.yml
   logger: !include common/logger.yml
