@@ -15,7 +15,7 @@ packages:
   ethernet: !include common/ethernet.yml
   api: !include common/api.yml
   ota: !include common/ota.yml
-  mqtt: !include common/mqtt.yml
+  # mqtt: !include common/mqtt.yml
   logger: !include common/logger.yml
   time: !include common/time.yml
   webserver: !include common/webserver.yml
