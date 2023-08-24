@@ -72,35 +72,35 @@ sensor:
       name: "$upperDevicename enclosure Pressure"
     update_interval: 300s
     
-  - platform: uptime
-    name: Uptime Sensor
-    id: uptime_sensor
-    update_interval: 60s
-    internal: true
-    on_raw_value:
-      then:
-        - text_sensor.template.publish:
-            id: uptime_human
-            state: !lambda |-
-              int seconds = round(id(uptime_sensor).raw_state);
-              int days = seconds / (24 * 3600);
-              seconds = seconds % (24 * 3600);
-              int hours = seconds / 3600;
-              seconds = seconds % 3600;
-              int minutes = seconds /  60;
-              seconds = seconds % 60;
-              return (
-                (days ? String(days) + "d " : "") +
-                (hours ? String(hours) + "h " : "") +
-                (minutes ? String(minutes) + "m " : "") +
-                (String(seconds) + "s")
-              ).c_str();
+#   - platform: uptime
+#     name: Uptime Sensor
+#     id: uptime_sensor
+#     update_interval: 60s
+#     internal: true
+#     on_raw_value:
+#       then:
+#         - text_sensor.template.publish:
+#             id: uptime_human
+#             state: !lambda |-
+#               int seconds = round(id(uptime_sensor).raw_state);
+#               int days = seconds / (24 * 3600);
+#               seconds = seconds % (24 * 3600);
+#               int hours = seconds / 3600;
+#               seconds = seconds % 3600;
+#               int minutes = seconds /  60;
+#               seconds = seconds % 60;
+#               return (
+#                 (days ? String(days) + "d " : "") +
+#                 (hours ? String(hours) + "h " : "") +
+#                 (minutes ? String(minutes) + "m " : "") +
+#                 (String(seconds) + "s")
+#               ).c_str();
 
-text_sensor:
-  - platform: template
-    name: $upperDevicename Uptime Human Readable
-    id: uptime_human
-    icon: mdi:clock-start
+# text_sensor:
+#   - platform: template
+#     name: $upperDevicename Uptime Human Readable
+#     id: uptime_human
+#     icon: mdi:clock-start
               
 # load module for PCA9685 16-Channel 12-bit PWM/Servo Driver I2C
 # datasheet https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf
@@ -234,71 +234,85 @@ light:
     name: "fl1HallwayCeilingLight"
     id: fl1HallwayCeilingLight
     output: pca1_0
+    restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: monochromatic
     name: "fl1HallwayWallLight"
     id: fl1HallwayWallLight
     output: pca1_1
+    restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: monochromatic
     name: "fl1ExteriorCeilingLight"
     id: fl1ExteriorCeilingLight
     output: pca1_2
+    restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: monochromatic
     name: "fl1BathroomCeilingLight"
     id: fl1BathroomCeilingLight
     output: pca1_3
+    restore_mode: RESTORE_DEFAULT_OFF
     
   - platform: monochromatic
     name: "fl1BathroomFloorHeating"
     id: fl1BathroomFloorHeating
     output: pca1_4
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl1LivingroomCeilingLightEast"
     id: fl1LivingroomCeilingLightEast
     output: pca1_5
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl1LivingroomCeilingLightCenter"
     id: fl1LivingroomCeilingLightCenter
     output: pca1_6
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl1LivingroomCeilingLightWest"
     id: fl1LivingroomCeilingLightWest
     output: pca1_7
+    restore_mode: RESTORE_DEFAULT_OFF
     
   - platform: monochromatic
     name: "fl1LivingroomWallLight"
     id: fl1LivingroomWallLight
     output: pca1_8
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl1LivingroomTableLight"
     id: fl1LivingroomTableLight
     output: pca1_9
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl1KitchenCeilingLight"
     id: fl1KitchenCeilingLight
     output: pca1_10
+    restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: monochromatic
     name: "fl1StairsCeilingLight"
     id: fl1StairsCeilingLight
     output: pca1_11
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl1StudyCeilingLight"
     id: fl1StudyCeilingLight
     output: pca1_12
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl1StudyWallLight"
     id: fl1StudyWallLight
     output: pca1_13
+    restore_mode: RESTORE_DEFAULT_OFF
     
   #   output: pca1_14 not connected on the PCB
 

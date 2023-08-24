@@ -56,35 +56,35 @@ sensor:
       name: "$upperDevicename enclosure Pressure"
     update_interval: 300s
 
-  - platform: uptime
-    name: Uptime Sensor
-    id: uptime_sensor
-    update_interval: 60s
-    internal: true
-    on_raw_value:
-      then:
-        - text_sensor.template.publish:
-            id: uptime_human
-            state: !lambda |-
-              int seconds = round(id(uptime_sensor).raw_state);
-              int days = seconds / (24 * 3600);
-              seconds = seconds % (24 * 3600);
-              int hours = seconds / 3600;
-              seconds = seconds % 3600;
-              int minutes = seconds /  60;
-              seconds = seconds % 60;
-              return (
-                (days ? String(days) + "d " : "") +
-                (hours ? String(hours) + "h " : "") +
-                (minutes ? String(minutes) + "m " : "") +
-                (String(seconds) + "s")
-              ).c_str();
+  # - platform: uptime
+  #   name: Uptime Sensor
+  #   id: uptime_sensor
+  #   update_interval: 60s
+  #   internal: true
+  #   on_raw_value:
+  #     then:
+  #       - text_sensor.template.publish:
+  #           id: uptime_human
+  #           state: !lambda |-
+  #             int seconds = round(id(uptime_sensor).raw_state);
+  #             int days = seconds / (24 * 3600);
+  #             seconds = seconds % (24 * 3600);
+  #             int hours = seconds / 3600;
+  #             seconds = seconds % 3600;
+  #             int minutes = seconds /  60;
+  #             seconds = seconds % 60;
+  #             return (
+  #               (days ? String(days) + "d " : "") +
+  #               (hours ? String(hours) + "h " : "") +
+  #               (minutes ? String(minutes) + "m " : "") +
+  #               (String(seconds) + "s")
+  #             ).c_str();
 
-text_sensor:
-  - platform: template
-    name: $upperDevicename Uptime Human Readable
-    id: uptime_human
-    icon: mdi:clock-start
+# text_sensor:
+#   - platform: template
+#     name: $upperDevicename Uptime Human Readable
+#     id: uptime_human
+#     icon: mdi:clock-start
               
 # load module for PCA9685 16-Channel 12-bit PWM/Servo Driver I2C
 # datasheet https://www.nxp.com/docs/en/data-sheet/PCA9685.pdf
@@ -211,71 +211,85 @@ light:
     name: "fl2HallwayCeilingLight"
     id: fl2HallwayCeilingLight
     output: pca1_0
+    restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: monochromatic
     name: "fl2BathroomCeilingLight"
     id: fl2BathroomCeilingLight
     output: pca1_1
+    restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: monochromatic
     name: "fl2BathroomShowerLight"
     id: fl2BathroomShowerLight
     output: pca1_2
+    restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: monochromatic
     name: "fl2BathroomBathtubLight"
     id: fl2BathroomBathtubLight
     output: pca1_3
+    restore_mode: RESTORE_DEFAULT_OFF
     
   - platform: monochromatic
     name: "fl2BathroomFloorHeating"
     id: fl2BathroomFloorHeating
     output: pca1_4
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl2Bedroom1CeilingLight"
     id: fl2Bedroom1CeilingLight
     output: pca1_5
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl2Bedroom1WallLight"
     id: fl2Bedroom1WallLight
     output: pca1_6
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl2Bedroom2CeilingLight"
     id: fl2Bedroom2CeilingLight
     output: pca1_7
+    restore_mode: RESTORE_DEFAULT_OFF
     
   - platform: monochromatic
     name: "fl2Bedroom2WallLight"
     id: fl2Bedroom2WallLight
     output: pca1_8
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl2Bedroom0CeilingLight1"
     id: fl2Bedroom0CeilingLight1
     output: pca1_9
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl2Bedroom0CeilingLight2"
     id: fl2Bedroom0CeilingLight2
     output: pca1_10
+    restore_mode: RESTORE_DEFAULT_OFF
 
   - platform: monochromatic
     name: "fl2Bedroom0WallLight"
     id: fl2Bedroom0WallLight
     output: pca1_11
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl2Bedroom0BedLight1"
     id: fl2Bedroom0BedLight1
     output: pca1_12
+    restore_mode: RESTORE_DEFAULT_OFF
         
   - platform: monochromatic
     name: "fl2Bedroom0BedLight2"
     id: fl2Bedroom0BedLight2
     output: pca1_13
+    restore_mode: RESTORE_DEFAULT_OFF
     
   #   output: pca1_14 not connected on the PCB
 
@@ -283,6 +297,7 @@ light:
     name: $upperDevicename Case Fan
     id: ${devicename}_case_fan
     output: pca1_15
+    restore_mode: RESTORE_DEFAULT_OFF
 
 
 # Define behaviour on lightswitch presses
