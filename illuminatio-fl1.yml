@@ -59,11 +59,39 @@ pcf8574:
   #   pcf8575: False
 
 # Individual outputs
-switch:
+button:
   - platform: restart
     name: $upperDevicename Restart
 
-# Temp sensor
+  # Trigger open study door action
+  - platform: template
+    name: Open Front door
+    id: doorFrontOpen
+    on_press:
+      # - output.turn_on: pca1_1
+      - light.turn_on: 
+          id: fl1HallwayFrontDoor
+          transition_length: 0s
+      - delay: 2s
+      # - output.turn_off: pca1_1
+      - light.turn_off: 
+          id: fl1HallwayFrontDoor
+          transition_length: 0s
+
+# switch:
+#   - platform: gpio
+#     name: "fl1HallwayFrontDoor"
+#     id: fl1HallwayFrontDoor
+#     output: pca1_1
+#     restore_mode: RESTORE_DEFAULT_OFF
+
+#   - platform: monochromatic
+#     name: "fl1ExteriorCeilingLight"
+#     id: fl1ExteriorCeilingLight
+#     output: pca1_2
+#     restore_mode: RESTORE_DEFAULT_OFF  
+      
+      # Temp sensor
 sensor:
   - platform: bmp085
     temperature:
@@ -121,15 +149,12 @@ output:
   - platform: pca9685
     id: pca1_1
     channel: 1
-    inverted: True
-    min_power: 0.3
-    max_power: 0.9
-    zero_means_zero: True
+    inverted: False
 
   - platform: pca9685
     id: pca1_2
     channel: 2
-    inverted: True
+    inverted: False
 
   - platform: pca9685
     id: pca1_3
@@ -142,7 +167,7 @@ output:
   - platform: pca9685
     id: pca1_4
     channel: 4
-    inverted: True
+    inverted: False
 
   - platform: pca9685
     id: pca1_5
@@ -236,13 +261,13 @@ light:
     output: pca1_0
     restore_mode: RESTORE_DEFAULT_OFF
 
-  - platform: monochromatic
-    name: "fl1HallwayWallLight"
-    id: fl1HallwayWallLight
+  - platform: binary
+    name: "fl1HallwayFrontDoor"
+    id: fl1HallwayFrontDoor
     output: pca1_1
     restore_mode: RESTORE_DEFAULT_OFF
 
-  - platform: monochromatic
+  - platform: binary
     name: "fl1ExteriorCeilingLight"
     id: fl1ExteriorCeilingLight
     output: pca1_2
@@ -418,18 +443,8 @@ binary_sensor:
                   transition_length: 0.1s
               - delay: 0.1s
 
-#12 fl1HallwaySwitch_key2 controlling fl1HallwayWallLight
+#12 fl1HallwaySwitch_key2 controlling fl1HallwayFrontDoor
   
-  # set the minimum dimming value to 0.05
-  - platform: template
-    id: ${fl1LightSwitch12Light}_dimMin
-    lambda: if (float(id(${fl1LightSwitch12Light}).remote_values.get_brightness()) < .05) return true; else return false;
-
-  # set the maximum dimming value to 1
-  - platform: template
-    id: ${fl1LightSwitch12Light}_dimMax
-    lambda: if (float(id(${fl1LightSwitch12Light}).remote_values.get_brightness()) >= 1) return true; else return false;
-
   - platform: gpio
     name: "fl1HallwaySwitch_key2"
     id: fl1LightSwitch12
@@ -437,77 +452,13 @@ binary_sensor:
       pcf8574: pcf8574_1
       number: 1
       mode: INPUT
-      inverted: True
+      inverted: False
     filters:
       - delayed_on_off: 30ms
-  # on single click, toggle light
-    on_click:
-      then:
-      - if:
-          condition:
-            light.is_off: ${fl1LightSwitch12Light}
-          then:
-            light.turn_on:
-              id: ${fl1LightSwitch12Light}
-              transition_length: 0s
-          else:
-            light.turn_off:
-              id: ${fl1LightSwitch12Light}
-              transition_length: 0s
-  # on double click, turn on ligh with brighness 100%
-    on_multi_click:
-    - timing:
-        - ON for at most 0.5s
-        - OFF for at most 1s
-        - ON for at most 0.5s
-        - OFF for at least 0.1s
-      then:
-        light.turn_on: 
-          id: ${fl1LightSwitch12Light}
-          brightness: 100%
-          transition_length: 0s
-  # on press, dimm up or down   
+  # on click, open front door for 2 seconds
     on_press:
       then:
-      - if:
-          condition:
-            or:
-              - light.is_off: ${fl1LightSwitch12Light}
-              - binary_sensor.is_on: ${fl1LightSwitch12Light}_dimMin
-          then:
-          - delay: 0.5s
-          - while:
-              condition:
-                and:
-                  - binary_sensor.is_on: fl1LightSwitch12
-                  - binary_sensor.is_off: ${fl1LightSwitch12Light}_dimMax
-              then:
-                - if:
-                    condition:
-                      light.is_off: ${fl1LightSwitch12Light}
-                    then:
-                    - light.turn_on:
-                        id: ${fl1LightSwitch12Light}
-                        brightness: 5%  
-                - light.dim_relative:
-                    id: ${fl1LightSwitch12Light}
-                    relative_brightness: 5%
-                    transition_length: 0.1s
-                - delay: 0.1s
-          else:
-          - delay: 0.5s
-          - while:
-              condition:
-                and:
-                  - binary_sensor.is_on: fl1LightSwitch12
-                  - light.is_on: ${fl1LightSwitch12Light}
-                  - binary_sensor.is_off: ${fl1LightSwitch12Light}_dimMin
-              then:
-                - light.dim_relative:
-                    id: ${fl1LightSwitch12Light}
-                    relative_brightness: -5%
-                    transition_length: 0.1s
-                - delay: 0.1s
+        - button.press: doorFrontOpen
 
 #13 fl1HallwaySwitch_key3 controlling fl1ExteriorCeilingLight
   - platform: gpio
