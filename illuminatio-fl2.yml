@@ -7,7 +7,8 @@ substitutions:
 
 esphome:
   name: $devicename
-  platform: ESP32
+
+esp32:
   board: esp32-poe
 
 packages:
@@ -19,9 +20,18 @@ packages:
   logger: !include common/logger.yml
   time: !include common/time.yml
   webserver: !include common/webserver.yml
+  # btproxy: !include common/btproxy.yml
 
 i2c:
   scan: True
+
+# esp32_ble_tracker:
+#   scan_parameters:
+#     interval: 1100ms
+#     window: 1100ms
+#     active: true
+
+# bluetooth_proxy:
 
 # load module for PCF8574 Remote 8-Bit I/O Expanderfor I2C Bus
 # datasheet https://www.ti.com/lit/ds/symlink/pcf8574.pdf
@@ -42,8 +52,7 @@ pcf8574:
     address: 0x23
     pcf8575: False
 
-# Individual outputs
-switch:
+button:
   - platform: restart
     name: $upperDevicename Restart
 

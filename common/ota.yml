@@ -1,3 +1,4 @@
 # Enable Over The Air updates
 ota:
+  platform: esphome
   password: !secret otaPwd
