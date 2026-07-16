@@ -10,6 +10,8 @@ esphome:
 
 esp32:
   board: esp32-poe
+  framework:
+       type: esp-idf
 
 packages:
   # wifi: !include common/wifi.yml
