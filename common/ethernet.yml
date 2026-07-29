@@ -9,3 +9,4 @@ ethernet:
     mode: CLK_OUT
   phy_addr: 0
   power_pin: GPIO12
+  domain: $domainName
