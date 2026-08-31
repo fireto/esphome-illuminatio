@@ -106,7 +106,12 @@ sensor:
       name: "$upperDevicename enclosure Temperature"
     pressure:
       name: "$upperDevicename enclosure Pressure"
-    update_interval: 300s
+    # 60s, not 300s. This probe is the rack fan thermostat's control input, and
+    # the rack cools with a time constant of about 13 min. At 300s that is only
+    # 2.6 samples per time constant, which is too coarse for a proportional
+    # loop. 60s gives about 13. The BMP180 is low power and does not self-heat
+    # measurably at this rate.
+    update_interval: 60s
     
 #   - platform: uptime
 #     name: Uptime Sensor
