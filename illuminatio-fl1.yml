@@ -337,10 +337,6 @@ light:
     
   #   output: pca1_14 not connected on the PCB
 
-  - platform: monochromatic
-    name: $upperDevicename Case Fan
-    id: ${devicename}_case_fan
-    output: pca1_15
 
 
 # Define behaviour on lightswitch presses
@@ -1826,3 +1822,17 @@ binary_sensor:
       - delayed_on_off: 30ms
 
 ############################# End of Switch behavior definition #############################
+
+# The case fan is a FAN, not a light. As a `monochromatic` light it landed in
+# the `light` domain, and `turnOffAllTheLighs` targets
+# `floor_id: [yard, floor1, floor2]`, so every goodNight switched the case fan
+# off along with the lights -- silently removing the cooling and biasing the
+# BMP180, which sits in this same enclosure and is the rack thermostat's probe.
+# `fan: platform: speed` takes the same pca9685 float output, exactly as
+# RackIpPower drives its ledc output.
+fan:
+  - platform: speed
+    output: pca1_15
+    name: $upperDevicename Case Fan
+    id: ${devicename}_case_fan
+    restore_mode: RESTORE_DEFAULT_ON
