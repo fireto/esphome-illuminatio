@@ -613,8 +613,14 @@ binary_sensor:
       inverted: True
     filters:
       - delayed_on_off: 30ms
-  # on press, toggle water heater
-    on_press:
+  # Hold for 2 s to toggle the water heater. A bare on_press let a palm or a
+  # lean on the panel close the boiler relay. On 01.09.2026 a press closed it
+  # for 59 h, because a latched boiler_fault kept HA out. This key stays as the
+  # manual override for the case that HA is down, but it now needs a deliberate
+  # gesture. Owner decision, 20.09.2026.
+    on_click:
+      min_length: 2000ms
+      max_length: 10000ms
       then:
         switch.toggle: ${fl1LightSwitch24Light}
 
