@@ -1,4 +1,5 @@
 # Enable Over The Air updates
 ota:
   platform: esphome
-  password: !secret otaPwd
+  # Uses the api encryption key (common/api.yml); no password needed
+  encryption:
