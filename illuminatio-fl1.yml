@@ -1,6 +1,6 @@
 ### Light controller main
 substitutions:
-  devicename: fl1_illuminatio
+  devicename: fl1illuminatio
   upperDevicename: Floor1 Lights Controller
   domainName: '.vn.fireto.net'   # domain name for the microcontroller
   # <<: !include ioMapping.yml
@@ -1845,5 +1845,5 @@ fan:
   - platform: speed
     output: pca1_15
     name: $upperDevicename Case Fan
-    id: ${devicename}_case_fan
+    id: case_fan
     restore_mode: RESTORE_DEFAULT_ON
